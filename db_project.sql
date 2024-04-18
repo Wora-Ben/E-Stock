@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 18, 2024 at 11:20 AM
+-- Generation Time: Apr 18, 2024 at 07:17 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -23,6 +23,18 @@ SET time_zone = "+00:00";
 CREATE DATABASE IF NOT EXISTS `db_project` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `db_project`;
 
+DELIMITER $$
+--
+-- Procedures
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `achat` (`id_article_param` INT(11), `quantite_param` INT(11), `prix` FLOAT)   BEGIN
+INSERT INTO achats(`id_article`, `quantite`, `prix_unitaire_ht`) VALUES(id_article_param, quantite_param, prix);
+
+UPDATE `article` SET `quantite` = quantite_param, `prix_achat_unitaire_HT` = prix WHERE `id_article` = id_article_param;
+END$$
+
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -36,12 +48,10 @@ CREATE TABLE IF NOT EXISTS `achats` (
   `prix_unitaire_ht` float NOT NULL,
   `date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `id_bons_reception` int(11) DEFAULT NULL,
-  `id_fournisseur` int(11) NOT NULL,
   PRIMARY KEY (`id_achat`),
   KEY `FK_achats_id_article` (`id_article`),
-  KEY `FK_achats_id_bon_reception` (`id_bons_reception`),
-  KEY `FK_achats_id_fournisseur` (`id_fournisseur`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  KEY `FK_achats_id_bon_reception` (`id_bons_reception`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -51,13 +61,18 @@ CREATE TABLE IF NOT EXISTS `achats` (
 
 CREATE TABLE IF NOT EXISTS `article` (
   `id_article` int(11) NOT NULL AUTO_INCREMENT,
+  `reference_article` varchar(255) NOT NULL,
   `designation_article` varchar(255) NOT NULL,
-  `prix_achat_unitaire_HT` float NOT NULL,
-  `quantite` int(11) NOT NULL,
+  `prix_achat_unitaire_HT` float DEFAULT NULL,
+  `quantite` int(11) DEFAULT NULL,
+  `date_ajout` timestamp NOT NULL DEFAULT current_timestamp(),
+  `derniere_modification` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
   `id_fournisseur` int(11) NOT NULL,
   PRIMARY KEY (`id_article`),
+  UNIQUE KEY `designation_article` (`designation_article`),
+  UNIQUE KEY `reference_article` (`reference_article`),
   KEY `FK_id_fournisseur` (`id_fournisseur`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -82,14 +97,18 @@ CREATE TABLE IF NOT EXISTS `client` (
   `id_client` int(11) NOT NULL AUTO_INCREMENT,
   `raison_sociale_client` varchar(255) NOT NULL,
   `adresse_client` varchar(255) NOT NULL,
-  `email_client` varchar(255) NOT NULL,
+  `email_client` varchar(255) DEFAULT NULL,
   `telephone_client` varchar(10) NOT NULL,
   `n_siren` int(9) NOT NULL,
-  `mode_paiement` enum('Cheque','Espece','Virement','Carte') NOT NULL,
-  `delai_paiement` int(11) NOT NULL,
+  `mode_paiement` enum('Cheque','Espece','Virement','Carte') DEFAULT NULL,
+  `delai_paiement` int(11) DEFAULT NULL,
   `mode_livraison` enum('Charge_Client','Notre_Charge') NOT NULL,
-  PRIMARY KEY (`id_client`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  PRIMARY KEY (`id_client`),
+  UNIQUE KEY `raison_sociale_client` (`raison_sociale_client`) USING BTREE,
+  UNIQUE KEY `n_siren` (`n_siren`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
 
 -- --------------------------------------------------------
 
@@ -107,8 +126,10 @@ CREATE TABLE IF NOT EXISTS `fournisseur` (
   `nom_interlocuteur` varchar(30) NOT NULL,
   `mode_paiement` enum('Cheque','Espece','Virement','Carte') NOT NULL,
   `delai_paiement` int(11) NOT NULL,
-  PRIMARY KEY (`id_fournisseur`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  PRIMARY KEY (`id_fournisseur`),
+  UNIQUE KEY `raison_sociale_fournisseur` (`raison_sociale_fournisseur`),
+  UNIQUE KEY `n_siren` (`n_siren`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -142,7 +163,7 @@ CREATE TABLE IF NOT EXISTS `vente` (
   PRIMARY KEY (`id_vente`),
   KEY `FK_vente_id_article` (`id_article`),
   KEY `FK_vente_id_client` (`id_client`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Constraints for dumped tables
@@ -153,8 +174,7 @@ CREATE TABLE IF NOT EXISTS `vente` (
 --
 ALTER TABLE `achats`
   ADD CONSTRAINT `FK_achats_id_article` FOREIGN KEY (`id_article`) REFERENCES `article` (`id_article`),
-  ADD CONSTRAINT `FK_achats_id_bon_reception` FOREIGN KEY (`id_bons_reception`) REFERENCES `bons_reception` (`id_bon`),
-  ADD CONSTRAINT `FK_achats_id_fournisseur` FOREIGN KEY (`id_fournisseur`) REFERENCES `fournisseur` (`id_fournisseur`);
+  ADD CONSTRAINT `FK_achats_id_bon_reception` FOREIGN KEY (`id_bons_reception`) REFERENCES `bons_reception` (`id_bon`);
 
 --
 -- Constraints for table `article`
