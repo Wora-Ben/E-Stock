@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Permet de manipuler les achats
+ * Class permet de manipuler les achats
  */
 class Achat
 {
@@ -26,12 +26,11 @@ class Achat
             return $stmt->execute();
         } catch (PDOException $e) {
             global $error;
-            if($e->errorInfo[1]==1452){
+            if ($e->errorInfo[1] == 1452) {
                 $error["achat"] = "aucun article avec ce id n'est trouvé";
             }
             return false;
         }
-
     }
 
     /**
@@ -42,12 +41,14 @@ class Achat
     public static function deleteAchat(int $id_achat): bool
     {
         $conn = connection();
-        $stmt = $conn->prepare('DELETE FROM `achats` WHERE `achats`.`id_achat` = :id_achat');
+        //Appelant la procedure de suppression
+        $stmt = $conn->prepare('CALL delete_achat(:id_achat)');
         $stmt->bindValue(":id_achat", $id_achat);
         $conn = null;
         $stmt->execute();
-        if ($stmt->rowCount()  == 0) {
-            $error["achat"] = "aucun article avec ce id n'est trouvé";
+        if ($stmt->rowCount()===0) {
+            global $error;
+            $error["delete_achat"] = "aucun achat avec ce id n'est trouvé";
             return false;
         }
         return true;
