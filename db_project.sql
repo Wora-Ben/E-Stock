@@ -208,11 +208,11 @@ CREATE TABLE IF NOT EXISTS `fournisseur` (
 -- --------------------------------------------------------
 
 --
--- Stand-in structure for view `list_stock`
+-- Stand-in structure for view `liste_stock`
 -- (See below for the actual view)
 --
-DROP VIEW IF EXISTS `list_stock`;
-CREATE TABLE IF NOT EXISTS `list_stock` (
+DROP VIEW IF EXISTS `liste_stock`;
+CREATE TABLE IF NOT EXISTS `liste_stock` (
 `reference_article` varchar(255)
 ,`designation_article` varchar(255)
 ,`prix_article` float
@@ -269,12 +269,12 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- --------------------------------------------------------
 
 --
--- Structure for view `list_stock`
+-- Structure for view `liste_stock`
 --
-DROP TABLE IF EXISTS `list_stock`;
+DROP TABLE IF EXISTS `liste_stock`;
 
-DROP VIEW IF EXISTS `list_stock`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `list_stock`  AS SELECT `article`.`reference_article` AS `reference_article`, `article`.`designation_article` AS `designation_article`, `article`.`prix_achat_unitaire_HT` AS `prix_article`, `article`.`quantite` AS `quantite_article`, `fournisseur`.`raison_sociale_fournisseur` AS `raison_sociale_fournisseur` FROM (`article` join `fournisseur`) WHERE `fournisseur`.`id_fournisseur` = `article`.`id_fournisseur` ;
+DROP VIEW IF EXISTS `liste_stock`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `liste_stock`  AS SELECT `article`.`reference_article` AS `reference_article`, `article`.`designation_article` AS `designation_article`, `article`.`prix_achat_unitaire_HT` AS `prix_article`, `article`.`quantite` AS `quantite_article`, `fournisseur`.`raison_sociale_fournisseur` AS `raison_sociale_fournisseur` FROM (`article` join `fournisseur`) WHERE `fournisseur`.`id_fournisseur` = `article`.`id_fournisseur` ;
 
 --
 -- Constraints for dumped tables
