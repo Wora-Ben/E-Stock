@@ -84,7 +84,7 @@ class Article
      * @param int $quantite quantite
      * @return bool état de la modification
      */
-    public static function modifyArticle(int $id_article, string $reference_article, string $designation_article, int $id_fournisseur, float $prix_un_ht, int $quantite): bool
+    public static function modifyArticle(int $id_article, string $reference_article, string $designation_article, float $prix_un_ht): bool
     {
         try {
             $conn = connection();
