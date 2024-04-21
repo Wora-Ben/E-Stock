@@ -57,16 +57,14 @@ class Article
      * @param int $quantite quantite
      * @return bool état de la creation
      */
-    public static function addArticle(string $reference_article, string $designation_article, int $id_fournisseur, float $prix_un_ht, int $quantite): bool
+    public static function addArticle(string $reference_article, string $designation_article, float $prix_un_ht): bool
     {
         try {
             $conn = connection();
-            $stmt = $conn->prepare('INSERT INTO article(reference_article, designation_article, prix_achat_unitaire_HT, quantite, id_fournisseur) VALUES(:ref, :design, :prix, :quantite, :id_fournisseur)');
+            $stmt = $conn->prepare('INSERT INTO article(reference_article, designation_article, prix_achat_unitaire_HT) VALUES(:ref, :design, :prix)');
             $stmt->bindValue(":ref", $reference_article);
             $stmt->bindValue(":design", $designation_article);
             $stmt->bindValue(":prix", $prix_un_ht);
-            $stmt->bindValue(":quantite", $quantite, PDO::PARAM_INT);
-            $stmt->bindValue(":id_fournisseur", $id_fournisseur, PDO::PARAM_INT);
             $conn = null;
             return $stmt->execute();
         } catch (PDOException $e) {
