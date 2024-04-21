@@ -52,9 +52,7 @@ class Article
      * Fonction créer un nouvel article
      * @param string $reference_article référence article
      * @param string $designation_article designation article
-     * @param int $id_fournisseur id fournisseur
      * @param float $prix_un_ht prix unitaire hors taxe
-     * @param int $quantite quantite
      * @return bool état de la creation
      */
     public static function addArticle(string $reference_article, string $designation_article, float $prix_un_ht): bool
