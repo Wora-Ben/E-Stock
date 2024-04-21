@@ -6,6 +6,27 @@
 class Stock
 {
 
+
+    /**
+     * Function renvoie des informations concernant le stock
+     * @return bool|array renvoie un tableau des informations, sinon false en cas d'échec
+     */
+    public static function stockInfos(): bool|array
+    {
+        try {
+            $conn = connection();
+            $stmt = $conn->prepare('SELECT * FROM infos_stock');
+            $conn = null;
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_NUM)[0];
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            global $error;
+            $error["listeStock"] = "Erreur";
+            return false;
+        }
+    }
+
     /**
      * Function renvoie la liste du stock
      * @return bool|array renvoie un tableau des articles du stock, sinon false en cas d'échec
