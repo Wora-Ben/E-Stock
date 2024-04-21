@@ -7,45 +7,43 @@
 class Article
 {
     /**
-     * Chercher un article par sa designation
-     * @param string $raison_sociale raison sociale du client
-     * @return false|mixed renvoie un tableau d'objet des clients trouvé avec cette raison sociale, sinon False en cas d'échec
+     * articlesInfos renvoie des informations concernant les articles
+     * @return bool|array renvoie un tableau des informations, sinon false en cas d'échec
      */
-    public static function getArticleByDesignation(string $designation_article): mixed
+    public static function articlesInfos()
     {
         try {
             $conn = connection();
-            $stmt = $conn->prepare('SELECT * FROM article WHERE designation_article LIKE :designation_article');
-            $stmt->bindValue(":designation_article", '%' . $designation_article . '%');
+            $stmt = $conn->prepare('SELECT * FROM liste_article');
             $conn = null;
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_OBJ);
         } catch (PDOException $e) {
             echo $e->getMessage();
             global $error;
-            $error["searchFournisseur"] = "aucun article avec cette designation n'est trouvé";
+            $error["articlesInfos"] = "Erreur";
             return false;
         }
-
     }
 
     /**
-     * Chercher un article par sa référence
-     * @param string $reference_article référence article
-     * @return false|mixed renvoie un tableau d'objet des articles trouvé avec cette référence, sinon False en cas d'échec
+     * Chercher un article dans la liste des articles
+     * @param string $search mots de recherche
+     * @return false|mixed renvoie un tableau d'objet de résultat de recherche, sinon False en cas d'échec
      */
-    public static function getArticleByReference(string $reference_article): mixed
+    public static function searchArticle(string $search): mixed
     {
         try {
             $conn = connection();
-            $stmt = $conn->prepare('SELECT * FROM article WHERE reference_article LIKE :ref');
-            $stmt->bindValue(":ref", $reference_article . "%");
+            $stmt = $conn->prepare('SELECT * FROM liste_article WHERE designation_article LIKE :designation_article OR reference_article LIKE :ref');
+            $stmt->bindValue(":designation_article", '%' . $search . '%');
+            $stmt->bindValue(":ref", $search . "%");
             $conn = null;
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_OBJ);
         } catch (PDOException $e) {
             global $error;
-            $error["searchFournisseur"] = "aucun article avec cette référence n'est trouvé";
+            $error["searchArticle"] = "aucun article avec cette designation n'est trouvé";
             return false;
         }
     }
