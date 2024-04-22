@@ -55,7 +55,7 @@ if (isset($_GET['newClient'])) {
     </div>
 EOT;
 }
-if (isset($_GET['articleEdited'])) {
+if (isset($_GET['clientEdited'])) {
     echo <<<EOT
     <div class="notification">
     <ul>
@@ -100,8 +100,14 @@ if ($infos) {
     foreach (array_chunk($infos, 15)[$currentPage - 1] as $info) {
         echo "<tr><td>$info->raison_sociale_client</td><td>$info->n_siren</td><td>$info->telephone_client</td><td>$info->email_client</td><td>$info->adresse_client</td><td>$info->mode_paiement</td><td>$info->delai_paiement</td><td>$info->mode_livraison</td>
         <td>
-        <a href='?editArticle&idArticle=$info->id_article&refArticle=$info->reference_article&desArticle=$info->designation_article&prixArticle=$info->prix_achat_unitaire_HT'><img src='/E-Stock/assets/images/edit.svg' alt=''></a> 
-        <a href='?deleteArticle&idArticle=$info->id_article&refArticle=$info->reference_article&desArticle=$info->designation_article'><img src='/E-Stock/assets/images/delete.svg' alt=''></a>
+        <form action='?editClient' method='POST'>
+            <input type='image' src='/E-Stock/assets/images/edit.svg'>
+            <input name='idClient' value='$info->id_client' type='hidden'>
+        </form>
+        <form action='?deleteClient' method='POST'>
+            <input type='image' src='/E-Stock/assets/images/delete.svg'>
+            <input name='idClient' value='$info->id_client' type='hidden'>
+        </form>        
         </td></tr>";
     }
 }

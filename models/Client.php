@@ -60,7 +60,7 @@ class Client
             $stmt->bindValue(":idClient", $id_client);
             $conn = null;
             $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_OBJ)[0];
+            return $stmt->fetchAll(PDO::FETCH_CLASS,ClientModel::class);
         } catch (PDOException $e) {
             echo $e->getMessage();
             global $error;
