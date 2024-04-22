@@ -37,7 +37,7 @@ echo <<<EOT
                         <div class="buttons">
                             <input name="search" type="submit" class="btn search" value="Rechercher">
                             <span class="btn addBtn">
-                                <a href="?addArticle">+ nouveau client</a>
+                                <a href="?addClient">+ nouveau client</a>
                             </span>
                         </div>
                     </div>
@@ -66,7 +66,7 @@ if (isset($_GET['clientEdited'])) {
     </div>
 EOT;
 }
-if (isset($_GET['articleDeleted'])) {
+if (isset($_GET['clientDeleted'])) {
     echo <<<EOT
     <div class="notification">
     <ul>

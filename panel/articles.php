@@ -1,6 +1,6 @@
 <?php
 include(dirname(__DIR__, 1) . '/services/database/connection.php');
-include(dirname(__DIR__, 1) . '/models/Article.php');
+include(dirname(__DIR__, 1) . '/controller/Article.php');
 const PAGE_MAX_ROWS = 15;
 
 if (isset($_GET['search']) && !empty($_GET['searchValue'])) {

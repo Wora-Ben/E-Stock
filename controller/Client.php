@@ -95,6 +95,7 @@ class Client
             $stmt->bindValue(":email", $email);
             $stmt->bindValue(":telephone", $telephone);
             $stmt->bindValue(":siren", $siren, PDO::PARAM_INT);
+            echo " :: ::: :: $mode_paiement $delai_paiement $mode_livraison";
             $stmt->bindValue(":mode_paiement", $mode_paiement, PDO::PARAM_INT);
             $stmt->bindValue(":delai_paiement", $delai_paiement, PDO::PARAM_INT);
             $stmt->bindValue(":mode_livraison", $mode_livraison, PDO::PARAM_INT);
@@ -103,7 +104,7 @@ class Client
         } catch (PDOException $e) {
             if ($e->errorInfo[1] === 1062) {
                 global $error;
-                $error["addClient"] = "numero de siren ou raison social d'entreprise existe déja";
+                $error["addClient"] = "Numéro de siren ou raison social d'entreprise existe déja";
             }
             return false;
         }

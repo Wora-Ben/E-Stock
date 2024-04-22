@@ -13,4 +13,6 @@ class ClientModel
     public $mode_paiement;
     public $delai_paiement;
     public $mode_livraison;
+
+    function __construct(){}
 }

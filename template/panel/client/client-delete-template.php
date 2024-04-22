@@ -11,7 +11,7 @@ echo <<<EOT
                 Vous voulez vraiment supprimer cette client ? 
             </li>
             <li>
-                Raison sociale : $info->refArticle
+                Raison sociale : $info->raison_sociale_client
             </li>
             <li>
                 N° SIREN : $info->n_siren
@@ -19,7 +19,7 @@ echo <<<EOT
         </ul>
         <div class="error-btn-container">
            <form action="?aa" method="POST">
-                <input name="idArticle" type="hidden" value="{$info->idClient}">
+                <input name="id_client" type="hidden" value="{$info->id_client}">
                 <input name="confirmDelete" class="btn btn-supprimer" type="submit" value="Supprimer l'article">
                 <a class="btn cancel-btn" href="articles.php">annuler</a>
             </form>

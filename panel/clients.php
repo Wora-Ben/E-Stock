@@ -1,7 +1,11 @@
 <?php
 global $info;
+
+use model\ClientModel;
+
 include(dirname(__DIR__, 1) . '/services/database/connection.php');
-include(dirname(__DIR__, 1) . '/models/Client.php');
+include(dirname(__DIR__, 1) . '/controller/Client.php');
+include_once(dirname(__DIR__, 1) . '/model/ClientModel.php');
 const PAGE_MAX_ROWS = 15;
 
 if (isset($_GET['search']) && !empty($_GET['searchValue'])) {
@@ -13,12 +17,14 @@ if (isset($_GET['search']) && !empty($_GET['searchValue'])) {
 if (isset($_GET['addClient'])) {
     $request = "enregistrerNvClient";
     if (isset($_POST['enregistrerNvClient'])) {
+        reloadInfo();
         if (validateForm()) {
-            if (Client::addClient(htmlspecialchars($_POST["raisonScClient"]), htmlspecialchars($_POST["adrClient"]), htmlspecialchars($_POST["emailClient"]), htmlspecialchars($_POST["telClient"]), htmlspecialchars($_POST["telClient"]), htmlspecialchars($_POST["nSirenClient"]), htmlspecialchars($_POST["modePaiement"]), htmlspecialchars($_POST["delaiPaiement"]), htmlspecialchars($_POST["modeLivraison"]))) {
+            if (Client::addClient(htmlspecialchars($_POST["raisonScClient"]), htmlspecialchars($_POST["adrClient"]), htmlspecialchars($_POST["emailClient"]), htmlspecialchars($_POST["telClient"]), htmlspecialchars($_POST["nSirenClient"]), htmlspecialchars($_POST["modePaiement"]), htmlspecialchars($_POST["delaiPaiement"]), htmlspecialchars($_POST["modeLivraison"]))) {
                 header('Location: clients.php?newClient=true');
             }
         }
     }
+    reloadInfo();
     includeForm();
     exit();
 }
@@ -31,15 +37,7 @@ if (isset($_POST['saveEdits'])) {
             header('Location: clients.php?clientEdited=true');
         }
     }
-    $info->id_client = htmlspecialchars($_POST['idClient']);
-    $info->raison_sociale_client = htmlspecialchars($_POST['raisonScClient']);
-    $info->adresse_client = htmlspecialchars($_POST["adrClient"]);
-    $info->email_client = htmlspecialchars($_POST["emailClient"]);
-    $info->telephone_client = htmlspecialchars($_POST["telClient"]);
-    $info->n_siren = htmlspecialchars($_POST["nSirenClient"]);
-    $info->mode_paiement = htmlspecialchars($_POST["modePaiement"]);
-    $info->delai_paiement = htmlspecialchars($_POST["delaiPaiement"]);
-    $info->mode_livraison = htmlspecialchars($_POST["modeLivraison"]);
+    reloadInfo();
     includeForm();
     exit();
 }
@@ -58,8 +56,8 @@ if (isset($_GET['deleteClient'])) {
     exit();
 }
 
-if (isset($_POST["confirmDelete"]) && Client::deleteClient($_POST['idClient'])) {
-    header('Location: articles.php?clientDeleted=true');
+if (isset($_POST["confirmDelete"]) && Client::deleteClient($_POST['id_client'])) {
+    header('Location: clients.php?clientDeleted=true');
 }
 //Intégrer la liste des articles
 include(dirname(__DIR__, 1) . '/template/panel/client/clients-template.php');
@@ -73,10 +71,6 @@ function validateForm(): bool
 {
     global $error;
     $valid = true;
-    if (empty($_POST["idClient"]) || !preg_match("/^[0-9]+$/", $_POST["idClient"])) {
-        $error[] = "Id non valide !";
-        $valid = false;
-    }
     if (empty($_POST["raisonScClient"]) || !preg_match("/^[a-zA-Z0-9 ]+$/", $_POST["raisonScClient"])) {
         $error[] = "Raison sociale client non valide !";
         $valid = false;
@@ -118,8 +112,21 @@ function validateForm(): bool
  */
 function includeForm(): void
 {
-    include(dirname(__DIR__, 1) . '/template/panel/clients/client-form-template.php');
+    include(dirname(__DIR__, 1) . '/template/panel/client/client-form-template.php');
 
 }
 
+function reloadInfo(): void {
+    global $info;
+    $info= new ClientModel();
+    $info->id_client = key_exists("id_client", $_POST) ? htmlspecialchars($_POST['id_client']) :" " ;
+    $info->raison_sociale_client = key_exists("raisonScClient", $_POST) ?htmlspecialchars($_POST['raisonScClient']) : "";
+    $info->adresse_client = key_exists("adrClient", $_POST) ?htmlspecialchars($_POST['adrClient']) : "";
+    $info->email_client = key_exists("emailClient", $_POST) ?htmlspecialchars($_POST['emailClient']) : "";
+    $info->telephone_client = key_exists("telClient", $_POST) ?htmlspecialchars($_POST['telClient']) : "";
+    $info->n_siren = key_exists("nSirenClient", $_POST) ?htmlspecialchars($_POST['nSirenClient']) : "";
+    $info->mode_paiement = key_exists("modePaiement", $_POST) ?htmlspecialchars($_POST['modePaiement']) : "";
+    $info->delai_paiement = key_exists("delaiPaiement", $_POST) ?htmlspecialchars($_POST['delaiPaiement']) : "";
+    $info->mode_livraison = key_exists("modeLivraison", $_POST) ?htmlspecialchars($_POST['modeLivraison']) : "";
+}
 ?>

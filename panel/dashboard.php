@@ -1,6 +1,6 @@
 <?php
-require(dirname(__DIR__, 1) . '/models/Stock.php');
 require(dirname(__DIR__, 1) . '/services/database/connection.php');
+require(dirname(__DIR__, 1) . '/controller/Stock.php');
 
 $infos = Stock::stockInfos();
 
