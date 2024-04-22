@@ -7,46 +7,43 @@
 class Fournisseur
 {
     /**
-     * Chercher un fournisseur par sa raison social
-     * @param string $raison_sociale raison sociale du fournisseur
-     * @return false|mixed renvoie un tableau d'objet des fournisseurs trouvé avec cette raison sociale, sinon False en cas d'échec
+     * fournisseursInfos renvoie des informations concernant les fournisseurs
+     * @return bool|array renvoie un tableau des informations, sinon false en cas d'échec
      */
-    public static function getFournisseurByRaisonSociale(string $raison_sociale)
+    public static function fournisseursInfos(): bool|array
     {
         try {
             $conn = connection();
-            $stmt = $conn->prepare('SELECT * FROM fournisseur WHERE raison_sociale_fournisseur=:rc');
-            $stmt->bindValue(":rc", $raison_sociale);
+            $stmt = $conn->prepare('SELECT * FROM fournisseur');
             $conn = null;
             $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_OBJ);
+            return $stmt->fetchAll(PDO::FETCH_CLASS,FournisseurModel::class);
         } catch (PDOException $e) {
             echo $e->getMessage();
             global $error;
-            $error["searchFournisseur"] = "aucun fournisseur avec cette raison social n'est trouvé";
+            $error["fournisseurInfos"] = "Erreur";
             return false;
         }
-
     }
 
     /**
-     * Chercher un fournisseur par son numéro de siren
-     * @param int $siren numéro de siren du fournisseur
-     * @return false|mixed renvoie un objet de résultat, sinon False en cas d'échec
+     * searchFournisseur chercher un fournisseur dans la liste des fournisseurs
+     * @param string $search mots de recherche
+     * @return false|mixed renvoie un tableau d'objet de résultat de recherche, sinon False en cas d'échec
      */
-    public static function getFournisseurBySiren(int $siren)
+    public static function searchFournisseur(string $search): mixed
     {
         try {
             $conn = connection();
-            $stmt = $conn->prepare('SELECT * FROM fournisseur WHERE n_siren=:siren');
-            $stmt->bindValue(":siren", $siren, PDO::PARAM_INT);
-            $stmt->setFetchMode(PDO::FETCH_OBJ);
+            $stmt = $conn->prepare('SELECT * FROM fournisseur WHERE raison_sociale_client LIKE :rcClient OR n_siren = :siren');
+            $stmt->bindValue(":rcClient", $search . '%');
+            $stmt->bindValue(":siren", $search );
             $conn = null;
             $stmt->execute();
-            return $stmt->fetch();
+            return $stmt->fetchAll(PDO::FETCH_CLASS, FournisseurModel::class);
         } catch (PDOException $e) {
             global $error;
-            $error["searchFournisseur"] = "aucun fournisseur avec cette raison social n'est trouvé";
+            $error["searchClient"] = "aucun fournisseur avec cette raison sociale ou n°siren n'est trouvé";
             return false;
         }
     }
