@@ -48,6 +48,27 @@ class Fournisseur
         }
     }
 
+    /**
+     * Chercher un fournisseur par son id
+     * @param int $id_fournisseur id de fournisseur
+     * @return false|mixed Renvoie un objet trouvé avec ce id, sinon False en cas d'échec
+     */
+    public static function getFournisseurById(int $id_fournisseur): bool|array
+    {
+        try {
+            $conn = connection();
+            $stmt = $conn->prepare('SELECT * FROM fournisseur WHERE id_fournisseur=:idFournisseur');
+            $stmt->bindValue(":idFournisseur", $id_fournisseur);
+            $conn = null;
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_CLASS,FournisseurModel::class);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            global $error;
+            $error["searchFournisseur"] = "aucun fournisseur avec ce id n'est trouvé";
+            return false;
+        }
+    }
 
     /**
      * Fonction créer un nouveau fournisseur
