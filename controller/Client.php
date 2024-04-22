@@ -1,5 +1,9 @@
 <?php
 
+use model\ClientModel;
+
+include (dirname(__DIR__).'/model/ClientModel.php');
+
 /**
  * Class pour manipuler le client
  */
@@ -16,7 +20,7 @@ class Client
             $stmt = $conn->prepare('SELECT * FROM client');
             $conn = null;
             $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_OBJ);
+            return $stmt->fetchAll(PDO::FETCH_CLASS,ClientModel::class);
         } catch (PDOException $e) {
             echo $e->getMessage();
             global $error;
@@ -39,7 +43,7 @@ class Client
             $stmt->bindValue(":siren", $search );
             $conn = null;
             $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_OBJ);
+            return $stmt->fetchAll(PDO::FETCH_CLASS, ClientModel::class);
         } catch (PDOException $e) {
             global $error;
             $error["searchClient"] = "aucun client avec cette raison sociale ou n°siren n'est trouvé";
