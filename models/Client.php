@@ -9,7 +9,7 @@ class Client
      * clientsInfos renvoie des informations concernant les clients
      * @return bool|array renvoie un tableau des informations, sinon false en cas d'échec
      */
-    public static function clientsInfos()
+    public static function clientsInfos(): bool|array
     {
         try {
             $conn = connection();
@@ -43,6 +43,28 @@ class Client
         } catch (PDOException $e) {
             global $error;
             $error["searchClient"] = "aucun client avec cette raison sociale ou n°siren n'est trouvé";
+            return false;
+        }
+    }
+
+    /**
+     * Chercher un client par son id
+     * @param int $id_client id de client
+     * @return false|mixed Renvoie un objet trouvé avec ce id, sinon False en cas d'échec
+     */
+    public static function getClientById(int $id_client): bool|array
+    {
+        try {
+            $conn = connection();
+            $stmt = $conn->prepare('SELECT * FROM client WHERE id_client=:idClient');
+            $stmt->bindValue(":idClient", $id_client);
+            $conn = null;
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_OBJ)[0];
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            global $error;
+            $error["searchClient"] = "aucun client avec ce id n'est trouvé";
             return false;
         }
     }
