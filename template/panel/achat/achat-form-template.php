@@ -45,6 +45,7 @@ EOT;
 
 echo <<<EOT
                 </select>
+</td>
                 <td><label>Quantite</label></td>
                 <td><input type="text" name="quantite"
                            value="$info->quantite"></td>

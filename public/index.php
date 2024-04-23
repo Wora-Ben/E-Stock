@@ -6,15 +6,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./assets/css/style.css">
-    <link rel="shortcut icon" href="assets/images/stock.svg" type="image/x-icon">
+    <link rel="stylesheet" href="/E-Stock/assets/css/style.css">
+    <link rel="shortcut icon" href="/E-Stock/assets/images/stock.svg" type="image/x-icon">
 </head>
 <body>
 <nav class="navbar">
     <div class="container">
         <div class="container-logo">
             <a href="index.html">
-                <img src="./assets/images/stock-sm.svg" alt="logo"><span class="heading-title text-center">E-Stock</span>
+                <img src="/E-Stock/assets/images/stock-sm.svg" alt="logo"><span class="heading-title text-center">E-Stock</span>
             </a>
         </div>
         <div class="menu">
@@ -26,7 +26,7 @@
                     <a href="apropos.html">À propos</a>
                 </li>
                 <li>
-                    <a class="btn" href="login.php"><img class='login-icon' src="assets/images/user.svg"></img>Se connecter</a>
+                    <a class="btn" href="login.php"><img class='login-icon' src="../../assets/images/user.svg"></img>Se connecter</a>
                 </li>
             </ul>
         </div>
@@ -51,7 +51,7 @@
         <div class="footer-grid">
             <div class="container-logo">
                 <a href="index.html">
-                    <img src="./assets/images/stock-sm.svg" alt="logo"><span class="heading-title text-center">E-Stock</span>
+                    <img src="../assets/images/stock-sm.svg" alt="logo"><span class="heading-title text-center">E-Stock</span>
                 </a>
             </div>
             <div>

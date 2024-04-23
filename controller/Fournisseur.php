@@ -35,7 +35,7 @@ class Fournisseur
     {
         try {
             $conn = connection();
-            $stmt = $conn->prepare('SELECT * FROM fournisseur WHERE raison_sociale_client LIKE :rcClient OR n_siren = :siren');
+            $stmt = $conn->prepare('SELECT * FROM fournisseur WHERE raison_sociale_fournisseur LIKE :rcClient OR n_siren = :siren');
             $stmt->bindValue(":rcClient", $search . '%');
             $stmt->bindValue(":siren", $search );
             $conn = null;
@@ -43,6 +43,7 @@ class Fournisseur
             return $stmt->fetchAll(PDO::FETCH_CLASS, FournisseurModel::class);
         } catch (PDOException $e) {
             global $error;
+            echo $e->getMessage();
             $error["searchClient"] = "aucun fournisseur avec cette raison sociale ou n°siren n'est trouvé";
             return false;
         }

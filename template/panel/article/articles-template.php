@@ -77,6 +77,13 @@ if (isset($_GET['articleDeleted'])) {
     </div>
 EOT;
 }
+if (isset($error)) {
+    echo "<div class=\"error-notification\" ><ul>";
+    foreach ($error as $value) {
+        echo "<li>$value</li>";
+    }
+    echo "</ul></div>";
+}
 echo <<<EOT
         <div class="box-content">
             <table>

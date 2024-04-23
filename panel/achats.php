@@ -10,7 +10,7 @@ const PAGE_MAX_ROWS = 15;
 $info = new AchatModel();
 
 if (isset($_GET['search']) && !empty($_GET['searchValue'])) {
-    $infos = Fournisseur::searchFournisseur(htmlspecialchars($_GET['searchValue']));
+    $infos = Achat::searchAchat(htmlspecialchars($_GET['searchValue']));
 } else {
     $infos = Achat::achatsInfos();
 }

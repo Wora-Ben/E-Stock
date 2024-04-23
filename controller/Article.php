@@ -61,7 +61,7 @@ class Article
     {
         try {
             $conn = connection();
-            $stmt = $conn->prepare('SELECT id_article,reference_article,designation_article,prix_achat_unitaire_HT FROM article WHERE id_article=:idArticle');
+            $stmt = $conn->prepare('SELECT * FROM liste_article WHERE id_article=:idArticle');
             $stmt->bindValue(":idArticle", $id_article);
             $conn = null;
             $stmt->execute();

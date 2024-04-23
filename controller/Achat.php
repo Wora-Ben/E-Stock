@@ -32,6 +32,28 @@ class Achat
     }
 
     /**
+     * searchAchat cherche un achat par la référence d'un article ou par sa désignation dans la liste des achats
+     * @param string $search mots de recherche
+     * @return false|mixed renvoie un tableau d'objet de résultat de recherche, sinon False en cas d'échec
+     */
+    public static function searchAchat(string $search): mixed
+    {
+        try {
+            $conn = connection();
+            $stmt = $conn->prepare('SELECT * FROM liste_achats WHERE reference_article LIKE :refArticle OR designation_article LIKE :desAr');
+            $stmt->bindValue(":desAr", $search . '%');
+            $stmt->bindValue(":refArticle", $search .'%' );
+            $conn = null;
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_CLASS, AchatModel::class);
+        } catch (PDOException $e) {
+            global $error;
+            $error["searchAchat"] = "aucune vente n'est trouvé";
+            return false;
+        }
+    }
+
+    /**
      * Chercher une achat par son id
      * @param int $id_achat id de l'achat
      * @return false|mixed Renvoie un objet trouvé avec ce id, sinon False en cas d'échec

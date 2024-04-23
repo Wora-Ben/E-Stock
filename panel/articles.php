@@ -33,7 +33,6 @@ if (isset($_POST['saveEdits'])) {
     $request = 'saveEdits';
 
     $info =  Article::getArticleById(htmlspecialchars($_POST['idArticle']))[0];
-    echo "id article : ".$info->id_article."<br>";
     if (validateForm()) {
         if ( Article::modifyArticle(htmlspecialchars($_POST['idArticle']), htmlspecialchars($_POST['refArticle']), htmlspecialchars($_POST['desArticle']), htmlspecialchars($_POST["prixArticle"]))){
             header('Location: articles.php?articleEdited=true');
@@ -59,6 +58,7 @@ if (isset($_GET['deleteArticle'])) {
 }
 
 if (isset($_POST["confirmDelete"]) && Article::deleteArticle($_POST['idArticle'])) {
+    echo"yess";
     header('Location: articles.php?articleDeleted=true');
 }
 //Intégrer la liste des articles
