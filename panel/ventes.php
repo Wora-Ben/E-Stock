@@ -9,7 +9,7 @@ const PAGE_MAX_ROWS = 15;
 $info = new VenteModel();
 
 if (isset($_GET['search']) && !empty($_GET['searchValue'])) {
-    $infos = Fournisseur::searchFournisseur(htmlspecialchars($_GET['searchValue']));
+    $infos = Vente::searchVente(htmlspecialchars($_GET['searchValue']));
 } else {
     $infos = Vente::ventesInfos();
 }
