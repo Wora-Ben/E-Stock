@@ -26,7 +26,7 @@ echo <<<EOT
         <div class="head-box">
             <div class="title-box">
                 <img class="panel-info-icon" src="/E-Stock/assets/images/sales-euro.svg" alt="fournisseur icon">
-                <span class="heading-text">Ventes</span>
+                <span class="heading-text">Détail des ventes</span>
             </div>
                 <form action="ventes.php" method="GET">
                     <div class="box-utils">
@@ -37,7 +37,7 @@ echo <<<EOT
                         <div class="buttons">
                             <input name="search" type="submit" class="btn search" value="Rechercher">
                             <span class="btn addBtn">
-                                <a href="?addVente">+ nouvel vente</a>
+                                <a href="?addVente">+ Ajouter une vente</a>
                             </span>
                         </div>
                     </div>

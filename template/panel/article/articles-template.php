@@ -26,7 +26,7 @@ echo <<<EOT
         <div class="head-box">
             <div class="title-box">
                 <img class="panel-info-icon" src="/E-Stock/assets/images/quantity.svg" alt="">
-                <span class="heading-text">Articles</span>
+                <span class="heading-text">Liste d'articles</span>
             </div>
                 <form action="articles.php" method="GET">
                     <div class="box-utils">
@@ -91,7 +91,7 @@ echo <<<EOT
                     <tr>
                         <th>Référence</th>
                         <th>Désignation</th>
-                        <th>Prix</th>
+                        <th>Prix unitaire</th>
                         <th>Action</th>
                     </tr>
                 </thead>

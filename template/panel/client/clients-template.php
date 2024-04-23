@@ -26,7 +26,7 @@ echo <<<EOT
         <div class="head-box">
             <div class="title-box">
                 <img class="panel-info-icon" src="/E-Stock/assets/images/clients.svg" alt="client icon">
-                <span class="heading-text">Clients</span>
+                <span class="heading-text">Liste clients</span>
             </div>
                 <form action="clients.php" method="GET">
                     <div class="box-utils">

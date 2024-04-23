@@ -25,8 +25,7 @@ echo <<<EOT
     <div class="box">
         <div class="head-box">
             <div class="title-box">
-                <img class="panel-info-icon" src="/E-Stock/assets/images/sales-euro.svg" alt="fournisseur icon">
-                <span class="heading-text">Ventes</span>
+                <span class="heading-text">Détail du stock</span>
             </div>
                 <form action="stock.php" method="GET">
                     <div class="box-utils">

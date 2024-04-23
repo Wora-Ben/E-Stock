@@ -51,7 +51,7 @@
         <div class="footer-grid">
             <div class="container-logo">
                 <a href="index.html">
-                    <img src="../assets/images/stock-sm.svg" alt="logo"><span class="heading-title text-center">E-Stock</span>
+                    <img src="assets/images/stock-sm.svg" alt="logo"><span class="heading-title text-center">E-Stock</span>
                 </a>
             </div>
             <div>
