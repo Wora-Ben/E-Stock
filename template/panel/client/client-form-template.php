@@ -13,7 +13,7 @@ echo <<<EOT
         </div>
 EOT;
 if ($error) {
-    echo "<div class=\"error\"><ul>";
+    echo "<div class=\"error-notification\"><ul>";
     foreach ($error as $value) {
         echo "<li>$value</li>";
     }

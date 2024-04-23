@@ -25,10 +25,10 @@ echo <<<EOT
     <div class="box">
         <div class="head-box">
             <div class="title-box">
-                <img class="panel-info-icon" src="/E-Stock/assets/images/clients.svg" alt="client icon">
-                <span class="heading-text">Clients</span>
+                <img class="panel-info-icon" src="/E-Stock/assets/images/value_import_goods.svg" alt="fournisseur icon">
+                <span class="heading-text">Achats</span>
             </div>
-                <form action="clients.php" method="GET">
+                <form action="achats.php" method="GET">
                     <div class="box-utils">
                         <div class="search-box">
                             <div class="search-logo"><img src="/E-Stock/assets/images/search.svg" alt=""></div>
@@ -37,41 +37,30 @@ echo <<<EOT
                         <div class="buttons">
                             <input name="search" type="submit" class="btn search" value="Rechercher">
                             <span class="btn addBtn">
-                                <a href="?addClient">+ nouveau client</a>
+                                <a href="?addAchat">+ nouvel achat</a>
                             </span>
                         </div>
                     </div>
                 </form>
         </div>
 EOT;
-if (isset($_GET['newClient'])) {
+if (isset($_GET['newAchat'])) {
     echo <<<EOT
     <div class="notification">
     <ul>
         <li>
-            Nouveau client a été ajouté avec succès
+            Nouvel achat a été ajouté avec succès
         </li>
     </ul>
     </div>
 EOT;
 }
-if (isset($_GET['clientEdited'])) {
+if (isset($_GET['AchatDeleted'])) {
     echo <<<EOT
     <div class="notification">
     <ul>
         <li>
-            Client a été modifier avec succès 
-        </li>
-    </ul>
-    </div>
-EOT;
-}
-if (isset($_GET['clientDeleted'])) {
-    echo <<<EOT
-    <div class="notification">
-    <ul>
-        <li>
-            Client a été supprimer avec succès 
+            L'achat a été supprimer avec succès 
         </li>
     </ul>
     </div>
@@ -89,14 +78,12 @@ echo <<<EOT
             <table>
                 <thead>
                     <tr>
-                        <th>Raison sociale</th>
-                        <th>N° SIREN</th>
-                        <th>Telephone</th>
-                        <th>Email</th>
-                        <th>Adresse</th>
-                        <th>Mode paiement</th>
-                        <th>Delai paiement</th>
-                        <th>Mode livraison</th>
+                        <th>Référence article</th>
+                        <th>Designation article</th>
+                        <th>Quantite</th>
+                        <th>Prix unitaire HT</th>
+                        <th>Fournisseur</th>
+                        <th>Date</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -105,15 +92,11 @@ EOT;
 
 if ($infos) {
     foreach (array_chunk($infos, 15)[$currentPage - 1] as $info) {
-        echo "<tr><td>$info->raison_sociale_client</td><td>$info->n_siren</td><td>$info->telephone_client</td><td>$info->email_client</td><td>$info->adresse_client</td><td>$info->mode_paiement</td><td>$info->delai_paiement</td><td>$info->mode_livraison</td>
+        echo "<tr><td>$info->reference_article</td><td>$info->designation_article</td><td>$info->quantite</td><td>$info->prix_unitaire_ht</td><td>$info->raison_sociale_fournisseur</td><td>$info->date</td>
         <td>
-        <form action='?editClient' method='POST'>
-            <input type='image' src='/E-Stock/assets/images/edit.svg'>
-            <input name='idClient' value='$info->id_client' type='hidden'>
-        </form>
-        <form action='?deleteClient' method='POST'>
+        <form action='?deleteAchat' method='POST'>
             <input type='image' src='/E-Stock/assets/images/delete.svg'>
-            <input name='idClient' value='$info->id_client' type='hidden'>
+            <input name='idAchat' value='$info->id_achat' type='hidden'>
         </form>        
         </td></tr>";
     }

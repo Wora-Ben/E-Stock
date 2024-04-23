@@ -4,6 +4,7 @@ include(dirname(__DIR__, 1) . '/services/database/connection.php');
 include(dirname(__DIR__, 1) . '/controller/Fournisseur.php');
 include_once(dirname(__DIR__, 1) . '/model/FournisseurModel.php');
 const PAGE_MAX_ROWS = 15;
+$info = new FournisseurModel();
 
 if (isset($_GET['search']) && !empty($_GET['searchValue'])) {
     $infos = Fournisseur::searchFournisseur(htmlspecialchars($_GET['searchValue']));
@@ -17,11 +18,10 @@ if (isset($_GET['addFournisseur'])) {
         reloadInfo();
         if (validateForm()) {
             if (Fournisseur::addFournisseur(htmlspecialchars($_POST['raisonScFournisseur']), htmlspecialchars($_POST['adrFournisseur']), htmlspecialchars($_POST["emailFournisseur"]), htmlspecialchars($_POST["telFournisseur"]), htmlspecialchars($_POST["nSirenFournisseur"]), htmlspecialchars($_POST["nomInterlocuteur"]), htmlspecialchars($_POST["modePaiement"]), htmlspecialchars($_POST["delaiPaiement"]))) {
-                header('Location: fournisseurs.php?newSupplier=true');
+                header('Location: fournisseurs.php?newFournisseur=true');
             }
         }
     }
-    reloadInfo();
     includeForm();
     exit();
 }
@@ -56,7 +56,7 @@ if (isset($_GET['deleteFournisseur'])) {
 }
 
 if (isset($_POST["confirmDelete"]) && Fournisseur::deleteFournisseur($_POST['idFournisseur'])) {
-    header('Location: fournisseurs.php?fournisseurDeleted=true');
+    header('Location: fournisseurs.php?FournisseurDeleted=true');
 }
 //Intégrer la liste des articles
 include(dirname(__DIR__, 1) . '/template/panel/fournisseur/fournisseurs-template.php');
@@ -118,8 +118,6 @@ function includeForm(): void
 function reloadInfo(): void
 {
     global $info;
-    $info = new FournisseurModel();
-    $info->id_fournisseur = key_exists("idFournisseur", $_POST) ? htmlspecialchars($_POST['idFournisseur']) : " ";
     $info->raison_sociale_fournisseur = key_exists("raisonScFournisseur", $_POST) ? htmlspecialchars($_POST['raisonScFournisseur']) : "";
     $info->adresse_fournisseur = key_exists("adrFournisseur", $_POST) ? htmlspecialchars($_POST['adrFournisseur']) : "";
     $info->email_fournisseur = key_exists("emailFournisseur", $_POST) ? htmlspecialchars($_POST['emailFournisseur']) : "";
@@ -128,7 +126,6 @@ function reloadInfo(): void
     $info->n_siren = key_exists("nSirenFournisseur", $_POST) ? htmlspecialchars($_POST['nSirenFournisseur']) : "";
     $info->mode_paiement = key_exists("modePaiement", $_POST) ? htmlspecialchars($_POST['modePaiement']) : "";
     $info->delai_paiement = key_exists("delaiPaiement", $_POST) ? htmlspecialchars($_POST['delaiPaiement']) : "";
-    echo $info->mode_paiement;
 }
 
 ?>

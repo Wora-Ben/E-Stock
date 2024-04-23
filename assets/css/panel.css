@@ -448,6 +448,16 @@ td .btn-submit:hover {
     color: var(--notification-color-text);
 }
 
+.error-notification {
+    border-radius: 30px;
+    padding: 5px 0 5px 10px;
+    background-color: var(--error-color-bg);
+}
+
+.error-notification ul li {
+    color: var(--error-color-txt);
+}
+
 /* Errors */
 
 .container-message {
@@ -469,6 +479,7 @@ td .btn-submit:hover {
 
 .error ul li {
     margin: 10px;
+    /*color: var(--error-color-txt);*/
     color: var(--error-color-txt);
 }
 

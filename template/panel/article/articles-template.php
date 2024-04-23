@@ -95,8 +95,15 @@ if ($infos) {
     foreach (array_chunk($infos, 15)[$currentPage - 1] as $info) {
         echo "<tr><td>$info->reference_article</td><td>$info->designation_article</td><td>$info->prix_achat_unitaire_HT</td>
         <td>
-        <a href='?editArticle&idArticle=$info->id_article&refArticle=$info->reference_article&desArticle=$info->designation_article&prixArticle=$info->prix_achat_unitaire_HT'><img src='/E-Stock/assets/images/edit.svg' alt=''></a> 
-        <a href='?deleteArticle&idArticle=$info->id_article&refArticle=$info->reference_article&desArticle=$info->designation_article'><img src='/E-Stock/assets/images/delete.svg' alt=''></a></td></tr>";
+        <form action='?editArticle' method='POST'>
+            <input type='image' src='/E-Stock/assets/images/edit.svg'>
+            <input name='idArticle' value='$info->id_article' type='hidden'>
+        </form>
+        <form action='?deleteArticle' method='POST'>
+            <input type='image' src='/E-Stock/assets/images/delete.svg'>
+            <input name='idArticle' value='$info->id_article' type='hidden'>
+        </form>        
+        </td></tr>";
     }
 }
 

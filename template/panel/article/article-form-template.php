@@ -1,22 +1,19 @@
 <?php
-global $idArticle;
-global $refArticle;
-global $desArticle;
-global $prixArticle;
-global $request;
+global $info;
 global $error;
+global $request;
 include(dirname(__DIR__, 2) . '/frag-deb.html');
 
 echo <<<EOT
 <form action="" method="POST">
-<input hidden value="$idArticle" name="idArticle">
+<input hidden value="$info->id_article" name="idArticle">
     <div class="container">
         <div class="heading-text">
             <p>Nouvel article</p>
         </div>
 EOT;
 if ($error) {
-    echo "<div class=\"error\"><ul>";
+    echo "<div class=\"error-notification\"><ul>";
     foreach ($error as $value) {
         echo "<li>$value</li>";
     }
@@ -31,15 +28,15 @@ echo <<<EOT
             <tr>
                 <td><label>Référence article</label></td>
                 <td><input type="text" name="refArticle" id="refAr"
-                           value="$refArticle"></td>
+                           value="$info->reference_article"></td>
                 <td><label>Designation article</label></td>
                 <td><input type="text" name="desArticle" id="desAr"
-                           value="$desArticle"></td>
+                           value="$info->designation_article"></td>
             </tr>
             <tr>
                 <td><label>Prix article</label></td>
-                <td><input type="text" name="prixArticle" id="prAr"
-                           value="$prixArticle"></td>
+                <td><input type="text" name="prixArticle" id="prixAr"
+                           value="$info->prix_achat_unitaire_HT"></td>
             </tr>
             <tr>
                 <td></td>
