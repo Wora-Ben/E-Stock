@@ -12,7 +12,7 @@ class Achat
 
 
     /**
-     * achatsInfo renvoie des informations concernant les clients
+     * achatsInfo renvoie des informations concernant les achats
      * @return bool|array renvoie un tableau des informations, sinon false en cas d'échec
      */
     public static function achatsInfos(): bool|array

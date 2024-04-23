@@ -5,21 +5,63 @@
  */
 class Vente
 {
+    /**
+     * ventesInfo renvoie des informations concernant les ventes
+     * @return bool|array renvoie un tableau des informations, sinon false en cas d'échec
+     */
+    public static function ventesInfos(): bool|array
+    {
+        try {
+            $conn = connection();
+            $stmt = $conn->prepare('SELECT * FROM liste_ventes');
+            $conn = null;
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_CLASS, VenteModel::class);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            global $error;
+            $error["ventesInfos"] = "Erreur";
+            return false;
+        }
+    }
+
+    /**
+     * Chercher une vente par son id
+     * @param int $id_vente id de la vente
+     * @return false|mixed Renvoie un objet trouvé avec ce id, sinon False en cas d'échec
+     */
+    public static function getVenteById(int $id_vente): bool|array
+    {
+        try {
+            $conn = connection();
+            $stmt = $conn->prepare('SELECT * FROM liste_ventes WHERE id_vente=:idVente');
+            $stmt->bindValue(":idVente", $id_vente, PDO::PARAM_INT);
+            $conn = null;
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_CLASS, VenteModel::class);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            global $error;
+            $error["searchAchat"] = "aucune vente avec ce id n'est trouvé";
+            return false;
+        }
+    }
 
     /**
      * @param int $id_client id client
      * @param int $id_article id article
      * @param int $quantite quantite
      * @param float $prix_uni prix de vente
-     * @param int $mode_livraison mode de livraison
+     * @param string $mode_livraison mode de livraison
      * @return bool L'état d'ajout
      */
-    public static function nouvelVente(int $id_client, int $id_article, int $quantite, float $prix_uni, int $mode_livraison): bool
+    public static function nouvelVente(int $id_client, int $id_article, int $quantite, float $prix_uni, string $mode_livraison): bool
     {
         try {
             $conn = connection();
             //Appelant la procedure de vente
             $stmt = $conn->prepare('CALL vente(:id_client,:id_article, :prix_uni, :mode_livraison, :quantite)');
+            $stmt->bindValue(":id_client", $id_client, PDO::PARAM_INT);
             $stmt->bindValue(":id_article", $id_article);
             $stmt->bindValue(":prix_uni", $prix_uni);
             $stmt->bindValue(":mode_livraison", $mode_livraison);

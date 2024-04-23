@@ -65,17 +65,16 @@ echo <<<EOT
                 <td><input type="text" name="delaiPaiement"
                            value="$info->delai_paiement"></td>
                 <td><label>Mode de livraison</label></td>
-
                 <td>
                     <select name="modeLivraison">
-                    <option value="Charge_Client"
+                    <option value="Charge Client"
 EOT;
 if ($info->mode_livraison == "Charge_Client") {
     echo "selected";
 }
 echo <<<EOT
 >Charge de client</option>
-                    <option value="Notre_Charge" 
+                    <option value="Notre Charge" 
 EOT;
 if ($info->mode_livraison == "Notre_Charge") {
     echo "selected";
@@ -83,9 +82,9 @@ if ($info->mode_livraison == "Notre_Charge") {
 echo <<<EOT
 >Notre charge</option>
                     </select>
+                    </td>
                 </tr>
                 <tr>
-                </td>
                 <td></td>
                 <td></td>
                 <td></td>
