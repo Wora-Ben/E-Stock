@@ -80,12 +80,12 @@ class Client
      * @param string $email email client
      * @param string $telephone telephone client
      * @param int $siren siren du client
-     * @param int $mode_paiement mode de paiement client
+     * @param string $mode_paiement mode de paiement client
      * @param int $delai_paiement delai du paiement pour client
-     * @param int $mode_livraison mode de livraison du client
+     * @param string $mode_livraison mode de livraison du client
      * @return bool
      */
-    public static function addClient(string $raison_sociale, string $adresse, string $email, string $telephone, int $siren, int $mode_paiement, int $delai_paiement, int $mode_livraison): bool
+    public static function addClient(string $raison_sociale, string $adresse, string $email, string $telephone, int $siren, string $mode_paiement, int $delai_paiement, string $mode_livraison): bool
     {
         try {
             $conn = connection();
@@ -95,10 +95,9 @@ class Client
             $stmt->bindValue(":email", $email);
             $stmt->bindValue(":telephone", $telephone);
             $stmt->bindValue(":siren", $siren, PDO::PARAM_INT);
-            echo " :: ::: :: $mode_paiement $delai_paiement $mode_livraison";
-            $stmt->bindValue(":mode_paiement", $mode_paiement, PDO::PARAM_INT);
+            $stmt->bindValue(":mode_paiement", $mode_paiement);
             $stmt->bindValue(":delai_paiement", $delai_paiement, PDO::PARAM_INT);
-            $stmt->bindValue(":mode_livraison", $mode_livraison, PDO::PARAM_INT);
+            $stmt->bindValue(":mode_livraison", $mode_livraison);
             $conn = null;
             return $stmt->execute();
         } catch (PDOException $e) {
@@ -114,15 +113,15 @@ class Client
      * @param int $id_client identifiant du client
      * @param string $raison_sociale nouvelle raison sociale du client
      * @param string $adresse nouvelle adresse du client
-     * @param string $email nouveau email client
-     * @param string $telephone nouveau numero de telephone client
-     * @param int $siren nouveau numero siren client
-     * @param int $mode_paiement mode de paiement client
+     * @param string $email nouvel email client
+     * @param string $telephone nouveau numéro de telephone client
+     * @param int $siren nouveau numéro siren client
+     * @param string $mode_paiement mode de paiement client
      * @param int $delai_paiement delai de paiement client
-     * @param int $mode_livraison mode de livraison client
-     * @return bool L'etat de modification
+     * @param string $mode_livraison mode de livraison client
+     * @return bool L'état de modification
      */
-    public static function modifyClient(int $id_client, string $raison_sociale, string $adresse, string $email, string $telephone, int $siren, int $mode_paiement, int $delai_paiement, int $mode_livraison): bool
+    public static function modifyClient(int $id_client, string $raison_sociale, string $adresse, string $email, string $telephone, int $siren, string $mode_paiement, int $delai_paiement, string $mode_livraison): bool
     {
         try {
             $conn = connection();
@@ -133,9 +132,9 @@ class Client
             $stmt->bindValue(":email", $email);
             $stmt->bindValue(":telephone", $telephone);
             $stmt->bindValue(":siren", $siren, PDO::PARAM_INT);
-            $stmt->bindValue(":mode_paiement", $mode_paiement, PDO::PARAM_INT);
+            $stmt->bindValue(":mode_paiement", $mode_paiement);
             $stmt->bindValue(":delai_paiement", $delai_paiement, PDO::PARAM_INT);
-            $stmt->bindValue(":mode_livraison", $mode_livraison, PDO::PARAM_INT);
+            $stmt->bindValue(":mode_livraison", $mode_livraison);
             $stmt->bindValue(":id_client", $id_client, PDO::PARAM_INT);
             $conn = null;
             return $stmt->execute();

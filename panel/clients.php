@@ -79,7 +79,7 @@ function validateForm(): bool
         $error[] = "Adresse client non valide !";
         $valid = false;
     }
-    if (empty($_POST["telClient"]) || !preg_match("/^[0-9]+$/", $_POST["telClient"])) {
+    if (empty($_POST["telClient"]) || (strlen($_POST["telClient"])!=10)  || !preg_match("/^[0-9]+$/", $_POST["telClient"])) {
         $error[] = "Telephone client non valide !";
         $valid = false;
     }
@@ -91,7 +91,7 @@ function validateForm(): bool
         $error[] = "Email adresse client non valide !";
         $valid = false;
     }
-    if (empty($_POST["modePaiement"]) || !preg_match("/^[1-2]+$/", $_POST["modeLivraison"])) {
+    if (empty($_POST["modePaiement"])) {
         $error[] = "Veuillez choisir le mode de paiement !";
         $valid = false;
     }
@@ -99,7 +99,7 @@ function validateForm(): bool
         $error[] = "Délai de paiement non valide !";
         $valid = false;
     }
-    if (empty($_POST["modeLivraison"]) || !preg_match("/^[1-2]+$/", $_POST["modeLivraison"])) {
+    if (empty($_POST["modeLivraison"])) {
         $error[] = "Veuillez choisir le mode de livraison !";
         $valid = false;
     }

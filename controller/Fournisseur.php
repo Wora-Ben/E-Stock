@@ -77,12 +77,12 @@ class Fournisseur
      * @param string $email email fournisseur
      * @param string $telephone telephone fournisseur
      * @param int $siren siren du fournisseur
-     * @param int $mode_paiement mode de paiement fournisseur
+     * @param string $mode_paiement mode de paiement fournisseur
      * @param int $delai_paiement delai du paiement pour fournisseur
      * @return bool etat de la creation
      */
     public
-    static function addFournisseur(string $raison_sociale, string $adresse, string $email, string $telephone, int $siren, string $nom_interlocuteur, int $mode_paiement, int $delai_paiement): bool
+    static function addFournisseur(string $raison_sociale, string $adresse, string $email, string $telephone, int $siren, string $nom_interlocuteur, string $mode_paiement, int $delai_paiement): bool
     {
         try {
             $conn = connection();
@@ -93,7 +93,7 @@ class Fournisseur
             $stmt->bindValue(":telephone", $telephone);
             $stmt->bindValue(":siren", $siren, PDO::PARAM_INT);
             $stmt->bindValue(":nom_interlocuteur", $nom_interlocuteur);
-            $stmt->bindValue(":mode_paiement", $mode_paiement, PDO::PARAM_INT);
+            $stmt->bindValue(":mode_paiement", $mode_paiement);
             $stmt->bindValue(":delai_paiement", $delai_paiement, PDO::PARAM_INT);
             $conn = null;
             return $stmt->execute();
@@ -115,12 +115,12 @@ class Fournisseur
      * @param string $email nouvel email fournisseur
      * @param string $telephone nouveau numero de telephone fournisseur
      * @param int $siren nouveau numero siren fournisseur
-     * @param int $mode_paiement mode de paiement fournisseur
+     * @param string $mode_paiement mode de paiement fournisseur
      * @param int $delai_paiement delai de paiement fournisseur
      * @return bool L'etat de modification
      */
     public
-    static function modifyFournisseur(int $id_fournisseur, string $raison_sociale, string $adresse, string $email, string $telephone, int $siren, string $nom_interlocuteur, int $mode_paiement, int $delai_paiement): bool
+    static function modifyFournisseur(int $id_fournisseur, string $raison_sociale, string $adresse, string $email, string $telephone, int $siren, string $nom_interlocuteur, string $mode_paiement, int $delai_paiement): bool
     {
         try {
             $conn = connection();
@@ -132,9 +132,10 @@ class Fournisseur
             $stmt->bindValue(":telephone", $telephone);
             $stmt->bindValue(":siren", $siren, PDO::PARAM_INT);
             $stmt->bindValue(":nom_interlocuteur", $nom_interlocuteur);
-            $stmt->bindValue(":mode_paiement", $mode_paiement, PDO::PARAM_INT);
+            $stmt->bindValue(":mode_paiement", $mode_paiement);
             $stmt->bindValue(":delai_paiement", $delai_paiement, PDO::PARAM_INT);
             $stmt->bindValue(":id_fournisseur", $id_fournisseur, PDO::PARAM_INT);
+            echo "$mode_paiement";
             $conn = null;
             return $stmt->execute();
         } catch (PDOException $e) {

@@ -8,10 +8,10 @@ echo <<<EOT
     <div class="error">
         <ul>
             <li>
-                Vous voulez vraiment supprimer cette client ? 
+                Vous voulez vraiment supprimer ce fournisseur ? 
             </li>
             <li>
-                Raison sociale : $info->raison_sociale_client
+                Raison sociale : $info->raison_sociale_fournisseur
             </li>
             <li>
                 N° SIREN : $info->n_siren
@@ -19,9 +19,9 @@ echo <<<EOT
         </ul>
         <div class="error-btn-container">
            <form action="?confirmDelete" method="POST">
-                <input name="id_client" type="hidden" value="{$info->id_client}">
-                <input name="confirmDelete" class="btn btn-supprimer" type="submit" value="Supprimer l'article">
-                <a class="btn cancel-btn" href="articles.php">annuler</a>
+                <input name="idFournisseur" type="hidden" value="{$info->id_fournisseur}">
+                <input name="confirmDelete" class="btn btn-supprimer" type="submit" value="Supprimer">
+                <a class="btn cancel-btn" href="fournisseurs.php">Annuler</a>
             </form>
         </div>
     </div>

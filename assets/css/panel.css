@@ -436,12 +436,14 @@ td .btn-submit {
 td .btn-submit:hover {
     background-color: var(--secondary-color);
 }
+
 /*Notification*/
 .notification {
     border-radius: 30px;
     padding: 5px 0 5px 10px;
     background-color: var(--notification-color-bg);
- }
+}
+
 .notification ul li {
     color: var(--notification-color-text);
 }
@@ -453,9 +455,11 @@ td .btn-submit:hover {
     justify-content: center;
     align-items: center;
 }
+
 .container-message .cancel-btn {
     background-color: #ccc;
 }
+
 .error {
     padding: 50px;
     background: var(--error-color-bg);
