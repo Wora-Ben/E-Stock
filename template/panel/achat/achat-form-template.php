@@ -10,7 +10,7 @@ echo <<<EOT
 <input hidden value="$info->id_achat" name="idAchat">
     <div class="container">
         <div class="heading-text">
-            <p>Nouvel achat</p>
+            <p>Achat</p>
         </div>
 EOT;
 if ($error) {
@@ -23,13 +23,13 @@ if ($error) {
 
 echo <<<EOT
     </div>
-    <div class="container">
+    <div class="container form-container">
         <table>
             <tbody>
             <tr>
                 <td><label>Article</label></td>
                 <td>
-                <select name="idArticle">
+                <select class="select-container" name="idArticle">
 EOT;
 $articles = Article::articlesInfos();
 foreach ($articles as $article){
@@ -55,7 +55,7 @@ echo <<<EOT
                            value="$info->prix_unitaire_ht"></td>
                 <td><label>Fournisseur</label></td>
                 <td>
-                <select name="idFournisseur">
+                <select class="select-container" name="idFournisseur">
 EOT;
 $fournisseurs = Fournisseur::fournisseursInfos();
 foreach ($fournisseurs as $fournisseur){

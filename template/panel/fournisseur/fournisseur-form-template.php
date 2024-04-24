@@ -9,7 +9,7 @@ echo <<<EOT
 <input hidden value="$info->id_fournisseur" name="idFournisseur">
     <div class="container">
         <div class="heading-text">
-            <p>Nouveau fourinsseur</p>
+            <p>Fourinsseur</p>
         </div>
 EOT;
 if ($error) {
@@ -22,7 +22,7 @@ if ($error) {
 
 echo <<<EOT
     </div>
-    <div class="container">
+    <div class="container form-container">
         <table>
             <tbody>
             <tr>
@@ -44,7 +44,7 @@ echo <<<EOT
                            value="$info->email_fournisseur"></td>
                 <td><label>Mode de paiement</label></td>
                 <td>
-                    <select name="modePaiement">
+                    <select class="select-container" name="modePaiement">
                     <option value="Cheque"
 EOT;
 if ($info->mode_paiement == "Cheque") {

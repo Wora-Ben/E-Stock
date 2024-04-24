@@ -9,7 +9,7 @@ echo <<<EOT
 <input hidden value="$info->id_article" name="idArticle">
     <div class="container">
         <div class="heading-text">
-            <p>Nouvel article</p>
+            <p>Article</p>
         </div>
 EOT;
 if ($error) {
@@ -22,7 +22,7 @@ if ($error) {
 
 echo <<<EOT
     </div>
-    <div class="container">
+    <div class="container form-container">
         <table>
             <tbody>
             <tr>

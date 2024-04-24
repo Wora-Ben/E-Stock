@@ -32,8 +32,8 @@ echo <<<EOT
             </div>
             <form action="" method="GET">
                 <div class="box-utils">
-                    <div class="search-box">
-                <select name="idArticle">
+                    <div>
+                         <select class="select-container" name="idArticle">
 EOT;
 $articles = Article::articlesInfos();
 foreach ($articles as $article){

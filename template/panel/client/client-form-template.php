@@ -9,7 +9,7 @@ echo <<<EOT
 <input hidden value="$info->id_client" name="idClient">
     <div class="container">
         <div class="heading-text">
-            <p>Nouveau client</p>
+            <p>Client</p>
         </div>
 EOT;
 if ($error) {
@@ -22,7 +22,7 @@ if ($error) {
 
 echo <<<EOT
     </div>
-    <div class="container">
+    <div class="container form-container">
         <table>
             <tbody>
             <tr>
@@ -44,7 +44,7 @@ echo <<<EOT
                            value="$info->email_client"></td>
                 <td><label>Mode de paiement</label></td>
                 <td>
-                    <select name="modePaiement">
+                    <select class="select-container" name="modePaiement">
                     <option value="Cheque"
 EOT;
 if ($info->mode_paiement == "Cheque") {
@@ -66,7 +66,7 @@ echo <<<EOT
                            value="$info->delai_paiement"></td>
                 <td><label>Mode de livraison</label></td>
                 <td>
-                    <select name="modeLivraison">
+                    <select class="select-container" name="modeLivraison">
                     <option value="Charge Client"
 EOT;
 if ($info->mode_livraison == "Charge_Client") {
