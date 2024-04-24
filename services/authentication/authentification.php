@@ -82,7 +82,7 @@ function is_user_logged_in(): bool
 function require_login(): void
 {
     if (!is_user_logged_in()) {
-        header("Location:login.php");
+        header("Location:http:". $_SERVER['HTTP'] ."/E-Stock/login.php");
     }
 }
 
@@ -98,9 +98,9 @@ function logout(): void
         session_destroy();
         session_write_close();
         setcookie(session_name(), "", 0, null, null, false, true);
-        header("Location:index.php");
+        header("Location:http:". $_SERVER['HTTP'] ."E-Stock/index.php");
     }
-    header("Location:index.php");
+    header("Location:http:". $_SERVER['HTTP'] ."/E-Stock/index.php");
 }
 
 ?>

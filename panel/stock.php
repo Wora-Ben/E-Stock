@@ -1,10 +1,12 @@
 <?php
+session_start();
 global $info;
+include(dirname(__DIR__, 1) . '/services/authentication/authentification.php');
+require_login();
 
 
 use model\StockModel;
 
-include(dirname(__DIR__, 1) . '/services/database/connection.php');
 include(dirname(__DIR__, 1) . '/controller/Stock.php');
 include_once(dirname(__DIR__, 1) . '/model/StockModel.php');
 

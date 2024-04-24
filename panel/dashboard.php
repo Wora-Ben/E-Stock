@@ -1,6 +1,8 @@
 <?php
-require(dirname(__DIR__, 1) . '/services/database/connection.php');
+session_start();
+require(dirname(__DIR__, 1) . '/services/authentication/authentification.php');
 require(dirname(__DIR__, 1) . '/controller/Stock.php');
+require_login();
 
 $infos = Stock::stockInfos();
 

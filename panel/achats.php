@@ -1,9 +1,11 @@
 <?php
 global $info;
+session_start();
 
 use model\AchatModel;
 
-include(dirname(__DIR__, 1) . '/services/database/connection.php');
+include(dirname(__DIR__, 1) . '/services/authentication/authentification.php');
+require_login();
 include(dirname(__DIR__, 1) . '/controller/Achat.php');
 include_once(dirname(__DIR__, 1) . '/model/AchatModel.php');
 const PAGE_MAX_ROWS = 15;
