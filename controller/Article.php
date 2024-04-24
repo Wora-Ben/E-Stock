@@ -2,7 +2,7 @@
 
 use model\ModelArticle;
 
-include (dirname(__DIR__).'/model/ModelArticle.php');
+include(dirname(__DIR__) . '/model/ModelArticle.php');
 
 /**
  * @author BEN DAOU
@@ -14,14 +14,14 @@ class Article
      * articlesInfos renvoie des informations concernant les articles
      * @return bool|array renvoie un tableau des informations, sinon false en cas d'échec
      */
-    public static function articlesInfos()
+    public static function articlesInfos(): bool|array
     {
         try {
             $conn = connection();
             $stmt = $conn->prepare('SELECT id_article,reference_article,designation_article,prix_achat_unitaire_HT FROM liste_article');
             $conn = null;
             $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_CLASS,ModelArticle::class);
+            return $stmt->fetchAll(PDO::FETCH_CLASS, ModelArticle::class);
         } catch (PDOException $e) {
             echo $e->getMessage();
             global $error;
@@ -33,9 +33,9 @@ class Article
     /**
      * Chercher un article dans la liste des articles
      * @param string $search mots de recherche
-     * @return false|mixed renvoie un tableau d'objet de résultat de recherche, sinon False en cas d'échec
+     * @return array|bool renvoie un tableau d'objet de résultat de recherche, sinon False en cas d'échec
      */
-    public static function searchArticle(string $search): mixed
+    public static function searchArticle(string $search): array|bool
     {
         try {
             $conn = connection();
@@ -65,11 +65,11 @@ class Article
             $stmt->bindValue(":idArticle", $id_article);
             $conn = null;
             $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_CLASS,ModelArticle::class);
+            return $stmt->fetchAll(PDO::FETCH_CLASS, ModelArticle::class);
         } catch (PDOException $e) {
             echo $e->getMessage();
             global $error;
-            $error["searchArticle"] = "aucun article avec ce id n'est trouvé";
+            $error["getArticle"] = "aucun article avec ce id n'est trouvé";
             return false;
         }
     }
@@ -105,9 +105,7 @@ class Article
      * @param int $id_article id article
      * @param string $reference_article reference client
      * @param string $designation_article designation client
-     * @param int $id_fournisseur id fournisseur
      * @param float $prix_un_ht prix unitaire hors taxe
-     * @param int $quantite quantite
      * @return bool état de la modification
      */
     public static function modifyArticle(int $id_article, string $reference_article, string $designation_article, float $prix_un_ht): bool
@@ -153,4 +151,3 @@ class Article
     }
 }
 
-?>

@@ -31,7 +31,7 @@ echo <<<EOT
                 <form action="clients.php" method="GET">
                     <div class="box-utils">
                         <div class="search-box">
-                            <div class="search-logo"><img src="/E-Stock/assets/images/search.svg" alt=""></div>
+                            <div class="search-logo"><img src="/E-Stock/assets/images/search.svg" alt="search-icon"></div>
                             <input name="searchValue" type="text" class="search-input" placeholder="Chercher">
                         </div>
                         <div class="buttons">
@@ -108,11 +108,11 @@ if ($infos) {
         echo "<tr><td>$info->raison_sociale_client</td><td>$info->n_siren</td><td>$info->telephone_client</td><td>$info->email_client</td><td>$info->adresse_client</td><td>$info->mode_paiement</td><td>$info->delai_paiement</td><td>$info->mode_livraison</td>
         <td>
         <form action='?editClient' method='POST'>
-            <input type='image' src='/E-Stock/assets/images/edit.svg'>
+            <input type='image' src='/E-Stock/assets/images/edit.svg' alt='edit'>
             <input name='idClient' value='$info->id_client' type='hidden'>
         </form>
         <form action='?deleteClient' method='POST'>
-            <input type='image' src='/E-Stock/assets/images/delete.svg'>
+            <input type='image' src='/E-Stock/assets/images/delete.svg' alt='delete'>
             <input name='idClient' value='$info->id_client' type='hidden'>
         </form>        
         </td></tr>";
@@ -123,7 +123,7 @@ echo <<<EOT
                 </tbody>
             </table>
         </div>
-            <navbar class="pagination">
+            <div class="pagination">
                 <ul class="pagination">
 EOT;
 
@@ -136,7 +136,7 @@ for ($i = 1; $i <= $pages; $i++) {
 }
 
 echo <<<EOT
-            </navbar>
+</ul>
         </div>
     </div>
 </div>

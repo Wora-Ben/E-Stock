@@ -2,7 +2,7 @@
 
 use model\ClientModel;
 
-include (dirname(__DIR__).'/model/ClientModel.php');
+include(dirname(__DIR__) . '/model/ClientModel.php');
 
 /**
  * Class pour manipuler le client
@@ -20,7 +20,7 @@ class Client
             $stmt = $conn->prepare('SELECT * FROM client');
             $conn = null;
             $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_CLASS,ClientModel::class);
+            return $stmt->fetchAll(PDO::FETCH_CLASS, ClientModel::class);
         } catch (PDOException $e) {
             echo $e->getMessage();
             global $error;
@@ -32,15 +32,15 @@ class Client
     /**
      * searchClient chercher un client dans la liste des clients
      * @param string $search mots de recherche
-     * @return false|mixed renvoie un tableau d'objet de résultat de recherche, sinon False en cas d'échec
+     * @return array|bool renvoie un tableau d'objet de résultat de recherche, sinon False en cas d'échec
      */
-    public static function searchClient(string $search): mixed
+    public static function searchClient(string $search): array|bool
     {
         try {
             $conn = connection();
             $stmt = $conn->prepare('SELECT * FROM client WHERE raison_sociale_client LIKE :rcClient OR n_siren = :siren');
             $stmt->bindValue(":rcClient", $search . '%');
-            $stmt->bindValue(":siren", $search );
+            $stmt->bindValue(":siren", $search);
             $conn = null;
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_CLASS, ClientModel::class);
@@ -64,7 +64,7 @@ class Client
             $stmt->bindValue(":idClient", $id_client);
             $conn = null;
             $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_CLASS,ClientModel::class);
+            return $stmt->fetchAll(PDO::FETCH_CLASS, ClientModel::class);
         } catch (PDOException $e) {
             echo $e->getMessage();
             global $error;
@@ -141,7 +141,7 @@ class Client
         } catch (PDOException $e) {
             if ($e->errorInfo[1] === 1062) {
                 global $error;
-                $error["modifyClient"] = "numero de siren ou raison social d'entreprise existe déja";
+                $error["modifyClient"] = "Numéro de siren ou raison social d'entreprise existe déja";
             }
             return false;
         }
@@ -164,7 +164,7 @@ class Client
             //Exist FOREIGN_KEY relatif a ce client
             if ($e->errorInfo[1] === 1451) {
                 global $error;
-                $error["deleteClient"] = "Impossible de supprimer le client, car il existe des etats relative a ce client";
+                $error["deleteClient"] = "Impossible de supprimer le client, car il existe des états relative a ce client";
             }
             return false;
         }

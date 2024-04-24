@@ -37,6 +37,8 @@ echo <<<EOT
                 <td><label>Prix article</label></td>
                 <td><input type="text" name="prixArticle" id="prixAr"
                            value="$info->prix_achat_unitaire_HT"></td>
+               <td></td>
+               <td></td>
             </tr>
             <tr>
                 <td></td>

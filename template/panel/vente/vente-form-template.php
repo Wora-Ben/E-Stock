@@ -88,12 +88,17 @@ EOT;
 
 }
 echo <<<EOT
+                </select>
                 </td>
-                <tr>
+                <td></td>
+                <td></td>
+                    <tr>
                 <td></td>
                 <td></td>
                 <td></td>
                 <td colspan="1" class="submit-tr"><input type="submit" name="$request" class="btn btn-submit" value="Enregistrer"></td>
+                <td></td>
+                <td></td>
                 </tr>
             </tbody>
         </table>

@@ -31,7 +31,7 @@ echo <<<EOT
                 <form action="achats.php" method="GET">
                     <div class="box-utils">
                         <div class="search-box">
-                            <div class="search-logo"><img src="/E-Stock/assets/images/search.svg" alt=""></div>
+                            <div class="search-logo"><img src="/E-Stock/assets/images/search.svg" alt="search-btn"></div>
                             <input name="searchValue" type="text" class="search-input" placeholder="Chercher">
                         </div>
                         <div class="buttons">
@@ -95,7 +95,7 @@ if ($infos) {
         echo "<tr><td>$info->reference_article</td><td>$info->designation_article</td><td>$info->quantite</td><td>$info->prix_unitaire_ht</td><td>$info->raison_sociale_fournisseur</td><td>$info->date</td>
         <td>
         <form action='?deleteAchat' method='POST'>
-            <input type='image' src='/E-Stock/assets/images/delete.svg'>
+            <input type='image' src='/E-Stock/assets/images/delete.svg' alt='delete-icon'>
             <input name='idAchat' value='$info->id_achat' type='hidden'>
         </form>        
         </td></tr>";
@@ -106,7 +106,7 @@ echo <<<EOT
                 </tbody>
             </table>
         </div>
-            <navbar class="pagination">
+            <div class="pagination">
                 <ul class="pagination">
 EOT;
 
@@ -119,7 +119,7 @@ for ($i = 1; $i <= $pages; $i++) {
 }
 
 echo <<<EOT
-            </navbar>
+        </ul>
         </div>
     </div>
 </div>

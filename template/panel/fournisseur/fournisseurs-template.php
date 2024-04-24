@@ -25,13 +25,13 @@ echo <<<EOT
     <div class="box">
         <div class="head-box">
             <div class="title-box">
-                <img class="panel-info-icon" src="/E-Stock/assets/images/supplier.svg" alt="fournisseur icon">
+                <img class="panel-info-icon" src="/E-Stock/assets/images/supplier.svg" alt="fournisseur-icon">
                 <span class="heading-text">Liste fournisseurs</span>
             </div>
                 <form action="fournisseurs.php" method="GET">
                     <div class="box-utils">
                         <div class="search-box">
-                            <div class="search-logo"><img src="/E-Stock/assets/images/search.svg" alt=""></div>
+                            <div class="search-logo"><img src="/E-Stock/assets/images/search.svg" alt="search-icon"></div>
                             <input name="searchValue" type="text" class="search-input" placeholder="Chercher">
                         </div>
                         <div class="buttons">
@@ -108,11 +108,11 @@ if ($infos) {
         echo "<tr><td>$info->raison_sociale_fournisseur</td><td>$info->n_siren</td><td>$info->telephone_fournisseur</td><td>$info->email_fournisseur</td><td>$info->adresse_fournisseur</td><td>$info->mode_paiement</td><td>$info->delai_paiement</td><td>$info->nom_interlocuteur</td>
         <td>
         <form action='?editFournisseur' method='POST'>
-            <input type='image' src='/E-Stock/assets/images/edit.svg'>
+            <input type='image' src='/E-Stock/assets/images/edit.svg' alt='edit-icon'>
             <input name='idFournisseur' value='$info->id_fournisseur' type='hidden'>
         </form>
         <form action='?deleteFournisseur' method='POST'>
-            <input type='image' src='/E-Stock/assets/images/delete.svg'>
+            <input type='image' src='/E-Stock/assets/images/delete.svg' alt='delete-icon'>
             <input name='idFournisseur' value='$info->id_fournisseur' type='hidden'>
         </form>        
         </td></tr>";
@@ -123,7 +123,7 @@ echo <<<EOT
                 </tbody>
             </table>
         </div>
-            <navbar class="pagination">
+            <div class="pagination">
                 <ul class="pagination">
 EOT;
 
@@ -136,7 +136,7 @@ for ($i = 1; $i <= $pages; $i++) {
 }
 
 echo <<<EOT
-            </navbar>
+</ul>
         </div>
     </div>
 </div>

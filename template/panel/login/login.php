@@ -13,7 +13,7 @@ echo <<<EOT
 
 </head>
 <body>
-<section>
+<div>
     <div class="container">
 EOT;
 if (isset($error)) {
@@ -24,6 +24,13 @@ if (isset($error)) {
     echo "</ul></div>";
 }
 echo <<<EOT
+        <div class="container-logo">
+            <a href="index.php">
+                <img src="/E-Stock/assets/images/stock-sm.svg" alt="logo">
+                <div class="heading-title text-center">E-Stock</div>
+            </a>
+        </div>
+
         <div>
             <form action="?login" method="post">
                 <table>
@@ -48,10 +55,10 @@ echo <<<EOT
                     </tr>
                 </table>
             </form>
-
         </div>
     </div>
-</section>
+</div>
+        <div class="container-bg"></div>
 </body>
 </html>
 EOT;

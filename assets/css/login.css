@@ -93,6 +93,16 @@ img {
 
 }
 
+.container-bg {
+    background: url("../images/bg.jpg") no-repeat;
+    background-size: contain;
+    background-position: right top;
+    position: absolute;
+    z-index: -999;
+    height: 100%;
+    width: 100%;
+}
+
 .head-page .head-page-content {
     width: 70%;
 }
@@ -150,19 +160,21 @@ img {
     margin: 0 auto;
     padding: 0 15px;
 }
-
+.container-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .container-logo a {
-    display: table;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
 }
 
-.container-logo img {
-    vertical-align: middle;
-    display: table-cell;
-}
 
-.container-logo span {
+.container-logo a div {
     vertical-align: middle;
-    display: table-cell;
     padding-left: 5px;
 }
 

@@ -103,11 +103,11 @@ if ($infos) {
         echo "<tr><td>$info->reference_article</td><td>$info->designation_article</td><td>$info->prix_achat_unitaire_HT</td>
         <td>
         <form action='?editArticle' method='POST'>
-            <input type='image' src='/E-Stock/assets/images/edit.svg'>
+            <input type='image' src='/E-Stock/assets/images/edit.svg' alt='edit-icon'>
             <input name='idArticle' value='$info->id_article' type='hidden'>
         </form>
         <form action='?deleteArticle' method='POST'>
-            <input type='image' src='/E-Stock/assets/images/delete.svg'>
+            <input type='image' src='/E-Stock/assets/images/delete.svg' alt='delete-icon'>
             <input name='idArticle' value='$info->id_article' type='hidden'>
         </form>        
         </td></tr>";
@@ -118,7 +118,7 @@ echo <<<EOT
                 </tbody>
             </table>
         </div>
-            <navbar class="pagination">
+            <div class="pagination">
                 <ul class="pagination">
 EOT;
 
@@ -131,7 +131,7 @@ for ($i = 1; $i <= $pages; $i++) {
 }
 
 echo <<<EOT
-            </navbar>
+            </ul>
         </div>
     </div>
 </div>

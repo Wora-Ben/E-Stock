@@ -71,7 +71,7 @@ echo <<<EOT
                 </tbody>
             </table>
         </div>
-            <navbar class="pagination">
+            <div class="pagination">
                 <ul class="pagination">
 EOT;
 
@@ -84,7 +84,7 @@ for ($i = 1; $i <= $pages; $i++) {
 }
 
 echo <<<EOT
-            </navbar>
+            </ul>
         </div>
     </div>
 </div>

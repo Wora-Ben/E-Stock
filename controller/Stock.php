@@ -32,9 +32,9 @@ class Stock
     /**
      * searchVente cherche dans le stock par la référence d'un article ou par sa désignation
      * @param string $search mots de recherche
-     * @return false|mixed renvoie un tableau d'objet de résultat de recherche, sinon False en cas d'échec
+     * @return array|bool renvoie un tableau d'objet de résultat de recherche, sinon False en cas d'échec
      */
-    public static function searchStock(string $search): mixed
+    public static function searchStock(string $search): array|bool
     {
         try {
             $conn = connection();
@@ -46,7 +46,7 @@ class Stock
             return $stmt->fetchAll(PDO::FETCH_CLASS, StockModel::class);
         } catch (PDOException $e) {
             global $error;
-            $error["searchVente"] = "Aucune vente n'est trouvé";
+            $error["searchStock"] = "Aucune vente n'est trouvé";
             return false;
         }
     }

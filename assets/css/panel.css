@@ -191,7 +191,7 @@ img {
     display: table-cell;
 }
 
-.container-logo span {
+.container-logo div {
     vertical-align: middle;
     display: table-cell;
     padding-left: 5px;
@@ -309,8 +309,21 @@ img {
     display: block;
 
 }
+.panel-information .container-logo a {
+    display: inline-block;
+    vertical-align: middle;
+    width: 300px;
+}
+.panel-information .container-logo a div {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
+}
 
-.panel-information .container-logo a span .panel-information-title {
+.panel-information .container-logo a div .panel-information-title {
+    text-align: center;
     font-size: 1.5rem;
     line-height: 1.4;
     font-weight: 600;

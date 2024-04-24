@@ -28,15 +28,15 @@ class Vente
     /**
      * searchVente cherche une vente par la référence d'un article ou par sa désignation dans la liste des ventes
      * @param string $search mots de recherche
-     * @return false|mixed renvoie un tableau d'objet de résultat de recherche, sinon False en cas d'échec
+     * @return array|bool renvoie un tableau d'objet de résultat de recherche, sinon False en cas d'échec
      */
-    public static function searchVente(string $search): mixed
+    public static function searchVente(string $search): array|bool
     {
         try {
             $conn = connection();
             $stmt = $conn->prepare('SELECT * FROM liste_ventes WHERE reference_article LIKE :refArticle OR designation_article LIKE :desAr');
             $stmt->bindValue(":desAr", $search . '%');
-            $stmt->bindValue(":refArticle", $search .'%' );
+            $stmt->bindValue(":refArticle", $search . '%');
             $conn = null;
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_CLASS, VenteModel::class);
@@ -64,7 +64,7 @@ class Vente
         } catch (PDOException $e) {
             echo $e->getMessage();
             global $error;
-            $error["searchAchat"] = "aucune vente avec ce id n'est trouvé";
+            $error["searchVente"] = "aucune vente avec ce id n'est trouvé";
             return false;
         }
     }
@@ -114,7 +114,7 @@ class Vente
         $stmt->execute();
         if ($stmt->rowCount() == 0) {
             global $error;
-            $error["delete_ve,te"] = "aucune vente avec ce id n'est trouvé";
+            $error["deleteVente"] = "aucune vente avec ce id n'est trouvé";
             return false;
         }
         return true;

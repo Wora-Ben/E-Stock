@@ -69,6 +69,7 @@ EOT;
 
 }
 echo <<<EOT
+                </select>
                 </td>
                 <tr>
                 <td></td>
