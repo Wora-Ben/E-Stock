@@ -8,6 +8,8 @@
     --primary-color: #fa993f;
     --light-color: #f4f4f6;
     --dark-color: #111;
+    --error-color-bg: #fdecec;
+    --error-color-txt: #cb3333;
 
 }
 
@@ -179,6 +181,7 @@ img {
 
 .btn:hover {
     opacity: 0.8;
+    color: var(--primary-color);
 }
 
 .btn-primary {
@@ -235,14 +238,30 @@ img {
     text-align: center;
 }
 
+.error-notification {
+    border-radius: 30px;
+    padding: 10px 20px 10px 20px;
+    background-color: var(--error-color-bg);
+    width: 100%;
+}
+
+.error-notification ul li {
+    font-weight: 200;
+    width: 100%;
+    color: var(--error-color-txt);
+}
+
 /* Login */
 .container table {
     border-spacing: 20px;
+    width: 100%;
 }
+
 .container input {
     padding: 5px;
     width: 100%;
 }
+
 .container td {
     padding: 5px;
 }

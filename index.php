@@ -26,7 +26,7 @@
                     <a href="apropos.html">À propos</a>
                 </li>
                 <li>
-                    <a class="btn" href="login.php"><img class='login-icon' src="../../assets/images/user.svg"></img>Se connecter</a>
+                    <a class="btn" href="login.php"><img class='login-icon' src="/E-Stock/assets/images/user.svg"></img>Se connecter</a>
                 </li>
             </ul>
         </div>
@@ -51,7 +51,7 @@
         <div class="footer-grid">
             <div class="container-logo">
                 <a href="index.html">
-                    <img src="assets/images/stock-sm.svg" alt="logo"><span class="heading-title text-center">E-Stock</span>
+                    <img src="/E-Stock/assets/images/stock-sm.svg" alt="logo"><span class="heading-title text-center">E-Stock</span>
                 </a>
             </div>
             <div>

@@ -1,3 +1,5 @@
+<?php
+echo <<<EOT
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,8 +15,17 @@
 <body>
 <section>
     <div class="container">
-        <div class="cc">
-            <form action="">
+EOT;
+if (isset($error)) {
+    echo "<div class=\"error-notification\" ><ul>";
+    foreach ($error as $value) {
+        echo "<li>$value</li>";
+    }
+    echo "</ul></div>";
+}
+echo <<<EOT
+        <div>
+            <form action="?login" method="post">
                 <table>
                     <tr>
                         <td>
@@ -43,3 +54,4 @@
 </section>
 </body>
 </html>
+EOT;

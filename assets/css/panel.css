@@ -209,6 +209,14 @@ img {
     cursor: pointer;
     transition: 0.5s;
 }
+.btn-with-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.btn-with-icon a{
+    width: 100%;
+}
 
 .btn:hover {
     opacity: 0.8;

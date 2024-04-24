@@ -68,13 +68,8 @@ function register(string $username, string $password): bool
 function is_user_logged_in(): bool
 {
     //Check session values & check if current session is not expired
-    if ((empty($_SESSION['username'])) || (isset($_SESSION['start_time']) && (time() - $_SESSION['start_time'] > 120)))//Seconds
+    if (!key_exists("username",$_SESSION) || (!isset($_SESSION['start_time']) && (time() - $_SESSION['start_time'] > 120)))//Seconds
     {
-        session_regenerate_id();
-        session_unset();
-        session_destroy();
-        session_write_close();
-        setcookie(session_name(), "", 0, null, null, false, true);
         return false;
     }
     return true;
@@ -87,7 +82,7 @@ function is_user_logged_in(): bool
 function require_login(): void
 {
     if (!is_user_logged_in()) {
-        header("Location:https://" . $_SERVER['HTTP_HOST'] . '/login.php');
+        header("Location:login.php");
     }
 }
 
@@ -103,9 +98,9 @@ function logout(): void
         session_destroy();
         session_write_close();
         setcookie(session_name(), "", 0, null, null, false, true);
-        header("Location:https://" . $_SERVER['HTTP_HOST'] . '/index.php');
-
+        header("Location:index.php");
     }
+    header("Location:index.php");
 }
 
 ?>
