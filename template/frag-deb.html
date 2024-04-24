@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>E-Stock</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/E-Stock/assets/css/panel.css">
+    <link rel="shortcut icon" href="/E-Stock/assets/images/stock.svg" type="image/x-icon">
+</head>
+<body>
+<nav class="navbar">
+    <div class="container">
+        <div class="container-logo">
+            <a href="index.html">
+                <img src="/E-Stock/assets/images/stock-sm.svg" alt="logo"><span class="heading-title text-center">E-Stock</span>
+            </a>
+        </div>
+        <div class="menu">
+            <ul>
+                <li>
+                    <a href="dashboard.php">Tableau de bord</a>
+                </li>
+                <li>
+                    <a href="articles.php">Article</a>
+                </li>
+                <li>
+                    <a href="achats.php">Achats</a>
+                </li>
+                <li>
+                    <a href="clients.php">Client</a>
+                </li>
+                <li>
+                    <a href="fournisseurs.php">Fournisseurs</a>
+                </li>
+                <li>
+                    <a href="ventes.php">Ventes</a>
+                </li>
+                <li>
+                    <a href="stock.php">Stock</a>
+                </li>
+                <li>
+                    <a href="">États</a>
+                        <ul class="submenu">
+                            <li><a href="etats.php?etatGeneral">État général</a></li>
+                            <li><a href="etats.php?etatArticle">État d'un article</a></li>
+                        </ul>
+                </li>
+                <li>
+                    <div class="btn-with-icon">
+                        <a class="btn" href="../panel/logout.php">
+                            <img class='logout-icon' src="/E-Stock/assets/images/logout.svg" alt="logout">
+                            <span>Se déconnecter</span>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

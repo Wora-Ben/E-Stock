@@ -1,5 +1,5 @@
 <?php
-// require dirname(__DIR__,1) . 'services';
+include(dirname(__DIR__) . '/model/FournisseurModel.php');
 
 /**
  * Class pour manipuler les fournisseurs
@@ -17,7 +17,7 @@ class Fournisseur
             $stmt = $conn->prepare('SELECT * FROM fournisseur');
             $conn = null;
             $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_CLASS,FournisseurModel::class);
+            return $stmt->fetchAll(PDO::FETCH_CLASS, FournisseurModel::class);
         } catch (PDOException $e) {
             echo $e->getMessage();
             global $error;
@@ -29,21 +29,22 @@ class Fournisseur
     /**
      * searchFournisseur chercher un fournisseur dans la liste des fournisseurs
      * @param string $search mots de recherche
-     * @return false|mixed renvoie un tableau d'objet de résultat de recherche, sinon False en cas d'échec
+     * @return array|bool renvoie un tableau d'objet de résultat de recherche, sinon False en cas d'échec
      */
-    public static function searchFournisseur(string $search): mixed
+    public static function searchFournisseur(string $search): array|bool
     {
         try {
             $conn = connection();
-            $stmt = $conn->prepare('SELECT * FROM fournisseur WHERE raison_sociale_client LIKE :rcClient OR n_siren = :siren');
+            $stmt = $conn->prepare('SELECT * FROM fournisseur WHERE raison_sociale_fournisseur LIKE :rcClient OR n_siren = :siren');
             $stmt->bindValue(":rcClient", $search . '%');
-            $stmt->bindValue(":siren", $search );
+            $stmt->bindValue(":siren", $search);
             $conn = null;
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_CLASS, FournisseurModel::class);
         } catch (PDOException $e) {
             global $error;
-            $error["searchClient"] = "aucun fournisseur avec cette raison sociale ou n°siren n'est trouvé";
+            echo $e->getMessage();
+            $error["searchFournisseur"] = "aucun fournisseur avec cette raison sociale ou n°siren n'est trouvé";
             return false;
         }
     }
@@ -61,7 +62,7 @@ class Fournisseur
             $stmt->bindValue(":idFournisseur", $id_fournisseur);
             $conn = null;
             $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_CLASS,FournisseurModel::class);
+            return $stmt->fetchAll(PDO::FETCH_CLASS, FournisseurModel::class);
         } catch (PDOException $e) {
             echo $e->getMessage();
             global $error;
@@ -77,12 +78,12 @@ class Fournisseur
      * @param string $email email fournisseur
      * @param string $telephone telephone fournisseur
      * @param int $siren siren du fournisseur
-     * @param int $mode_paiement mode de paiement fournisseur
+     * @param string $mode_paiement mode de paiement fournisseur
      * @param int $delai_paiement delai du paiement pour fournisseur
      * @return bool etat de la creation
      */
     public
-    static function addFournisseur(string $raison_sociale, string $adresse, string $email, string $telephone, int $siren, string $nom_interlocuteur, int $mode_paiement, int $delai_paiement): bool
+    static function addFournisseur(string $raison_sociale, string $adresse, string $email, string $telephone, int $siren, string $nom_interlocuteur, string $mode_paiement, int $delai_paiement): bool
     {
         try {
             $conn = connection();
@@ -93,7 +94,7 @@ class Fournisseur
             $stmt->bindValue(":telephone", $telephone);
             $stmt->bindValue(":siren", $siren, PDO::PARAM_INT);
             $stmt->bindValue(":nom_interlocuteur", $nom_interlocuteur);
-            $stmt->bindValue(":mode_paiement", $mode_paiement, PDO::PARAM_INT);
+            $stmt->bindValue(":mode_paiement", $mode_paiement);
             $stmt->bindValue(":delai_paiement", $delai_paiement, PDO::PARAM_INT);
             $conn = null;
             return $stmt->execute();
@@ -102,7 +103,7 @@ class Fournisseur
             print_r($e->errorInfo);
             if ($e->errorInfo[1] === 1062) {
                 global $error;
-                $error["addClient"] = "numero de siren ou raison social d'entreprise existe déja";
+                $error["addFournisseur"] = "Numéro de siren ou raison social d'entreprise existe déja";
             }
             return false;
         }
@@ -113,14 +114,14 @@ class Fournisseur
      * @param string $raison_sociale nouvelle raison sociale du fournisseur
      * @param string $adresse nouvelle adresse du fournisseur
      * @param string $email nouvel email fournisseur
-     * @param string $telephone nouveau numero de telephone fournisseur
-     * @param int $siren nouveau numero siren fournisseur
-     * @param int $mode_paiement mode de paiement fournisseur
+     * @param string $telephone nouveau numéro de telephone fournisseur
+     * @param int $siren nouveau numéro siren fournisseur
+     * @param string $mode_paiement mode de paiement fournisseur
      * @param int $delai_paiement delai de paiement fournisseur
-     * @return bool L'etat de modification
+     * @return bool L'état de modification
      */
     public
-    static function modifyFournisseur(int $id_fournisseur, string $raison_sociale, string $adresse, string $email, string $telephone, int $siren, string $nom_interlocuteur, int $mode_paiement, int $delai_paiement): bool
+    static function modifyFournisseur(int $id_fournisseur, string $raison_sociale, string $adresse, string $email, string $telephone, int $siren, string $nom_interlocuteur, string $mode_paiement, int $delai_paiement): bool
     {
         try {
             $conn = connection();
@@ -132,15 +133,16 @@ class Fournisseur
             $stmt->bindValue(":telephone", $telephone);
             $stmt->bindValue(":siren", $siren, PDO::PARAM_INT);
             $stmt->bindValue(":nom_interlocuteur", $nom_interlocuteur);
-            $stmt->bindValue(":mode_paiement", $mode_paiement, PDO::PARAM_INT);
+            $stmt->bindValue(":mode_paiement", $mode_paiement);
             $stmt->bindValue(":delai_paiement", $delai_paiement, PDO::PARAM_INT);
             $stmt->bindValue(":id_fournisseur", $id_fournisseur, PDO::PARAM_INT);
+            echo "$mode_paiement";
             $conn = null;
             return $stmt->execute();
         } catch (PDOException $e) {
             if ($e->errorInfo[1] === 1062) {
                 global $error;
-                $error["modifyClient"] = "numero de siren ou raison social d'entreprise existe déja";
+                $error["modifyFournisseur"] = "Numéro de siren ou raison social d'entreprise existe déja";
             }
             return false;
         }
@@ -164,11 +166,9 @@ class Fournisseur
             //Exist FOREIGN_KEY relatif a ce fournisseur
             if ($e->errorInfo[1] === 1451) {
                 global $error;
-                $error["deleteClient"] = "Impossible de supprimer le fournisseur, car il existe des etats relative a ce fournisseur";
+                $error["deleteFournisseur"] = "Impossible de supprimer le fournisseur, car il existe des états relative a ce fournisseur";
             }
             return false;
         }
     }
 }
-
-?>

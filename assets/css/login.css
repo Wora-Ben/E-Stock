@@ -1,0 +1,291 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --primary-color: #fa993f;
+    --light-color: #f4f4f6;
+    --dark-color: #111;
+    --error-color-bg: #fdecec;
+    --error-color-txt: #cb3333;
+
+}
+
+body {
+    max-width: 2000px; /**/
+    margin: 0 auto;
+    padding: 0 15px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    height: 500px;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+a {
+    text-decoration: none;
+    color: #333;
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+}
+
+.navbar {
+    background-color: #fff;
+    padding: 20px;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar .menu ul {
+    display: flex;
+}
+
+.navbar ul li a {
+    padding: 10px 20px;
+    display: block;
+    font-weight: 600;
+    transition: 0.5s;
+
+}
+
+.navbar ul li a span {
+    margin-right: 10px;
+}
+
+.navbar ul li:last-child a {
+    margin-left: 10px;
+}
+
+.navbar ul li a:hover {
+    color: var(--primary-color);
+}
+
+.navbar ul li img {
+    margin-right: 10px;
+    height: 24px;
+    width: 24px;
+}
+
+.head-page {
+    margin-bottom: 50px;
+}
+
+.head-page .container {
+    background: url("../images/bg.jpg") no-repeat;
+    background-size: contain;
+    background-position: right bottom;
+    height: 750px;
+
+}
+
+.container-bg {
+    background: url("../images/bg.jpg") no-repeat;
+    background-size: contain;
+    background-position: right top;
+    position: absolute;
+    z-index: -999;
+    height: 100%;
+    width: 100%;
+}
+
+.head-page .head-page-content {
+    width: 70%;
+}
+
+.head-page .text {
+    width: 70%;
+    margin-bottom: 20px;
+}
+
+.bg-dark {
+    background: var(--dark-color);
+}
+
+.footer h4 {
+    color: #ccc;
+}
+
+.footer {
+    padding: 40px 0;
+}
+
+.footer h4 {
+    margin-bottom: 10px;
+}
+
+.footer ul li {
+    line-height: 2.5;
+}
+
+.footer a {
+    color: #ccc;
+}
+
+.footer-grid {
+    display: grid;
+    /*grid-template-columns: 2fr 1fr 1fr 4fr;*/
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 30px;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    max-width: 2000px; /**/
+    /*display: flex;*/
+    /*align-items: center;*/
+    /*justify-content: center;*/
+    padding: 50px;
+    background-color: #ccc;
+    border-radius: 30px;
+}
+
+.container-sm {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+.container-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.container-logo a {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.container-logo a div {
+    vertical-align: middle;
+    padding-left: 5px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 13px 20px;
+    background-color: var(--light-color);
+    color: #333;
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.btn:hover {
+    opacity: 0.8;
+    color: var(--primary-color);
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    color: #fff;
+}
+
+.btn-dark {
+    background: var(--dark-color);
+    color: #fff;
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+.heading-title {
+    font-size: 2.8rem;
+    line-height: 1.2;
+    font-weight: 600;
+    margin: 40px 0 20px;
+}
+
+.heading-text {
+    font-size: 2.2rem;
+    line-height: 1.4;
+    font-weight: normal;
+    margin: 40px 0 20px;
+}
+
+.heading-subtext {
+    font-size: 1.8rem;
+    line-height: 1.4;
+    font-weight: normal;
+    margin: 30px 0 20px;
+}
+
+.text {
+    font-size: 1.2rem;
+    line-height: 1.4;
+    font-weight: normal;
+    margin: 20px 0 20px;
+}
+
+.subtext {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    font-weight: normal;
+    margin: 10px 0 20px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.error-notification {
+    border-radius: 30px;
+    padding: 10px 20px 10px 20px;
+    background-color: var(--error-color-bg);
+    width: 100%;
+}
+
+.error-notification ul li {
+    font-weight: 200;
+    width: 100%;
+    color: var(--error-color-txt);
+}
+
+/* Login */
+.container table {
+    border-spacing: 20px;
+    width: 100%;
+}
+
+.container input {
+    padding: 5px;
+    width: 100%;
+}
+
+.container td {
+    padding: 5px;
+}
+
+.container input {
+    border-style: none;
+    border-radius: 5px;
+    font-weight: 400;
+    margin-left: 5px;
+}
+
+.container .btn {
+    background-color: white;
+    padding: 5px;
+}

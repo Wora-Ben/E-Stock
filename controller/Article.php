@@ -1,5 +1,9 @@
 <?php
 
+use model\ModelArticle;
+
+include(dirname(__DIR__) . '/model/ModelArticle.php');
+
 /**
  * @author BEN DAOU
  * @package models
@@ -10,14 +14,14 @@ class Article
      * articlesInfos renvoie des informations concernant les articles
      * @return bool|array renvoie un tableau des informations, sinon false en cas d'échec
      */
-    public static function articlesInfos()
+    public static function articlesInfos(): bool|array
     {
         try {
             $conn = connection();
-            $stmt = $conn->prepare('SELECT * FROM liste_article');
+            $stmt = $conn->prepare('SELECT id_article,reference_article,designation_article,prix_achat_unitaire_HT FROM liste_article');
             $conn = null;
             $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_OBJ);
+            return $stmt->fetchAll(PDO::FETCH_CLASS, ModelArticle::class);
         } catch (PDOException $e) {
             echo $e->getMessage();
             global $error;
@@ -29,9 +33,9 @@ class Article
     /**
      * Chercher un article dans la liste des articles
      * @param string $search mots de recherche
-     * @return false|mixed renvoie un tableau d'objet de résultat de recherche, sinon False en cas d'échec
+     * @return array|bool renvoie un tableau d'objet de résultat de recherche, sinon False en cas d'échec
      */
-    public static function searchArticle(string $search): mixed
+    public static function searchArticle(string $search): array|bool
     {
         try {
             $conn = connection();
@@ -44,6 +48,28 @@ class Article
         } catch (PDOException $e) {
             global $error;
             $error["searchArticle"] = "aucun article avec cette designation n'est trouvé";
+            return false;
+        }
+    }
+
+    /**
+     * Chercher un article par son id
+     * @param int $id_article id de client
+     * @return false|mixed Renvoie un objet trouvé avec ce id, sinon False en cas d'échec
+     */
+    public static function getArticleById(int $id_article): bool|array
+    {
+        try {
+            $conn = connection();
+            $stmt = $conn->prepare('SELECT * FROM liste_article WHERE id_article=:idArticle');
+            $stmt->bindValue(":idArticle", $id_article);
+            $conn = null;
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_CLASS, ModelArticle::class);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            global $error;
+            $error["getArticle"] = "aucun article avec ce id n'est trouvé";
             return false;
         }
     }
@@ -79,22 +105,18 @@ class Article
      * @param int $id_article id article
      * @param string $reference_article reference client
      * @param string $designation_article designation client
-     * @param int $id_fournisseur id fournisseur
      * @param float $prix_un_ht prix unitaire hors taxe
-     * @param int $quantite quantite
      * @return bool état de la modification
      */
     public static function modifyArticle(int $id_article, string $reference_article, string $designation_article, float $prix_un_ht): bool
     {
         try {
             $conn = connection();
-            $stmt = $conn->prepare('UPDATE article SET reference_article=:ref, designation_article=:des, id_fournisseur=:id_fournisseur,prix_achat_unitaire_HT=:prix, quantite=:quantite WHERE id_article=:id_article');
+            $stmt = $conn->prepare('UPDATE article SET reference_article=:ref, designation_article=:des,prix_achat_unitaire_HT=:prix WHERE id_article=:id_article');
             $stmt->bindValue(":id_article", $id_article, PDO::PARAM_INT);
             $stmt->bindValue(":ref", $reference_article);
             $stmt->bindValue(":des", $designation_article);
-            $stmt->bindValue(":id_fournisseur", $id_fournisseur, PDO::PARAM_INT);
             $stmt->bindValue(":prix", $prix_un_ht);
-            $stmt->bindValue(":quantite", $quantite, PDO::PARAM_INT);
             $conn = null;
             return $stmt->execute();
         } catch (PDOException $e) {
@@ -129,4 +151,3 @@ class Article
     }
 }
 
-?>

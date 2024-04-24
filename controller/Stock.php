@@ -1,12 +1,14 @@
 <?php
 
+use model\StockModel;
+
+require(dirname(__DIR__, 1) . '/model/StockModel.php');
+
 /**
  * Class permet de récupérer les informations concernant le stock
  */
 class Stock
 {
-
-
     /**
      * Function renvoie des informations concernant le stock
      * @return bool|array renvoie un tableau des informations, sinon false en cas d'échec
@@ -28,6 +30,28 @@ class Stock
     }
 
     /**
+     * searchVente cherche dans le stock par la référence d'un article ou par sa désignation
+     * @param string $search mots de recherche
+     * @return array|bool renvoie un tableau d'objet de résultat de recherche, sinon False en cas d'échec
+     */
+    public static function searchStock(string $search): array|bool
+    {
+        try {
+            $conn = connection();
+            $stmt = $conn->prepare('SELECT * FROM liste_stock WHERE reference_article LIKE :refArticle OR designation_article LIKE :desAr');
+            $stmt->bindValue(":desAr", $search . '%');
+            $stmt->bindValue(":refArticle", $search . '%');
+            $conn = null;
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_CLASS, StockModel::class);
+        } catch (PDOException $e) {
+            global $error;
+            $error["searchStock"] = "Aucune vente n'est trouvé";
+            return false;
+        }
+    }
+
+    /**
      * Function renvoie la liste du stock
      * @return bool|array renvoie un tableau des articles du stock, sinon false en cas d'échec
      */
@@ -38,7 +62,7 @@ class Stock
             $stmt = $conn->prepare('SELECT * FROM liste_stock');
             $conn = null;
             $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_OBJ);
+            return $stmt->fetchAll(PDO::FETCH_CLASS, StockModel::class);
         } catch (PDOException $e) {
             echo $e->getMessage();
             global $error;
@@ -58,7 +82,7 @@ class Stock
             $stmt = $conn->prepare('SELECT * FROM etat_stock_global');
             $conn = null;
             $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_OBJ);
+            return $stmt->fetchAll(PDO::FETCH_CLASS);
         } catch (PDOException $e) {
             echo $e->getMessage();
             global $error;
@@ -85,6 +109,26 @@ class Stock
             echo $e->getMessage();
             global $error;
             $error["listeStockArticle"] = "Erreur";
+            return false;
+        }
+    }
+
+    /**
+     * Function la valeur du stock actuel
+     * @return bool|array renvoie un tableau de résultat, sinon false en cas d'échec
+     */
+    public static function valeurStock(): bool|array
+    {
+        try {
+            $conn = connection();
+            $stmt = $conn->prepare('SELECT valeur_stock()');
+            $conn = null;
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_NUM)[0];
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            global $error;
+            $error["valeurStock"] = "Erreur";
             return false;
         }
     }
