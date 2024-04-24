@@ -1,21 +1,24 @@
 <?php
-require(dirname(__DIR__, 1) . "\services\database\connection.php");
+require(dirname(__DIR__, 1) . "/database/connection.php");
+global $error;
 /**
  * @param String $username
  * @return mixed
  */
-function getUserInfos(string $username)
+function getUserInfos(string $username): mixed
 {
-    $conn = connection();
-    $stmt = $conn->prepare('SELECT * FROM utilisateur WHERE username=:username');
     try {
-        $str = $stmt->execute([":username" => $username]);
+        $conn = connection();
+        $stmt = $conn->prepare("SELECT * FROM utilisateur WHERE username=:username");
+        $stmt->bindValue(":username", $username);
+        $conn = null;
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
     } catch (PDOException $e) {
-        $error['login'] = "erreur d'authentification";
+        global $error;
+        $error['login'] = "Erreur d'authentification";
+        return false;
     }
-    $stmt->setFetchMode(PDO::FETCH_OBJ);
-    $conn = null;
-    return $stmt->fetch();
 }
 
 /**
@@ -28,14 +31,34 @@ function login(string $username, string $password): bool
 {
     //get current user infos
     $user = getUserInfos($username);
-    if ($user && $user->passwordHash === hash("sha256", $password)) {
+    if ($user && $user[0]->passwordHash === hash("sha256", $password)) {
         session_start();
-        $_SESSION['username'] = $user->username;
-        $_SESSION['id_user'] = $user->id_user;
-        $_SESSION['start_time'] = time(); // update last activity time stamp
+        $_SESSION['username'] = $user[0]->username;
+        $_SESSION['id_user'] = $user[0]->id_user;
+        $_SESSION['start_time'] = time();
         return true;
     }
+    global $error;
+    $error['login'] = "Nom d'utilisateur ou mot de passe incorrect";
     return false;
+}
+
+function register(string $username, string $password): bool
+{
+    try {
+        $conn = connection();
+        $stmt = $conn->prepare('INSERT INTO utilisateur(username,passwordHash) VALUES(:username,:passwordHash)');
+        $stmt->bindValue(":username", $username);
+        $stmt->bindValue(":passwordHash", hash("sha256", $password));
+        $conn = null;
+        return $stmt->execute();
+    } catch (PDOException $e) {
+        global $error;
+        $error['register'] = "Erreur d'inscription";
+        return false;
+    }
+
+
 }
 
 /**
@@ -64,7 +87,7 @@ function is_user_logged_in(): bool
 function require_login(): void
 {
     if (!is_user_logged_in()) {
-        header("Location:http://" . $_SERVER['HTTP_HOST'] . '/project/PHP/Panel/index.php');
+        header("Location:https://" . $_SERVER['HTTP_HOST'] . '/login.php');
     }
 }
 
@@ -80,7 +103,7 @@ function logout(): void
         session_destroy();
         session_write_close();
         setcookie(session_name(), "", 0, null, null, false, true);
-        header("Location:http://" . $_SERVER['HTTP_HOST'] . '/project/PHP/Panel/index.php');
+        header("Location:https://" . $_SERVER['HTTP_HOST'] . '/index.php');
 
     }
 }
